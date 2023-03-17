@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-03-17T05:59:24.957Z</updated>
+  <updated>2023-03-17T07:43:55.328Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,18 +17,480 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Hello World</title>
-    <link href="http://example.com/2023/03/17/hello-world/"/>
-    <id>http://example.com/2023/03/17/hello-world/</id>
+    <title>一些学到的算法分享</title>
+    <link href="http://example.com/2023/03/17/yi-xie-xue-dao-de-suan-fa-fen-xiang/"/>
+    <id>http://example.com/2023/03/17/yi-xie-xue-dao-de-suan-fa-fen-xiang/</id>
+    <published>2023-03-17T07:40:52.099Z</published>
+    <updated>2023-03-17T07:43:55.328Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h4</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>分布式面试题</title>
+    <link href="http://example.com/2023/03/17/fen-bu-shi/"/>
+    <id>http://example.com/2023/03/17/fen-bu-shi/</id>
+    <published>2023-03-17T07:40:51.946Z</published>
+    <updated>2023-03-17T07:43:22.797Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;分布式&quot;&gt;分布式&lt;/h2&gt;
+&lt;h4</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>多线程面试题</title>
+    <link href="http://example.com/2023/03/17/duo-xian-cheng/"/>
+    <id>http://example.com/2023/03/17/duo-xian-cheng/</id>
+    <published>2023-03-17T07:40:51.780Z</published>
+    <updated>2023-03-17T07:43:13.989Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;多线程&quot;&gt;多线程&lt;/h2&gt;
+&lt;h4</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Redis面试题</title>
+    <link href="http://example.com/2023/03/17/redis/"/>
+    <id>http://example.com/2023/03/17/redis/</id>
+    <published>2023-03-17T07:40:51.557Z</published>
+    <updated>2023-03-17T07:41:22.174Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;redis&quot;&gt;Redis&lt;/h2&gt;
+&lt;h4</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL笔记分享</title>
+    <link href="http://example.com/2023/03/17/mysql-bi-ji-fen-xiang/"/>
+    <id>http://example.com/2023/03/17/mysql-bi-ji-fen-xiang/</id>
+    <published>2023-03-17T07:40:51.295Z</published>
+    <updated>2023-03-17T07:44:40.151Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h2 id=&quot;第1章-数据库概述&quot;&gt;第1章 数据库概述&lt;/h2&gt;
+&lt;h3 id=&quot;关系型数据库设计规则&quot;&gt;1 关系型数据库设计规则&lt;/h3&gt;
+&lt;h4 id=&quot;表记录字段&quot;&gt;1.1</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Modeling path information for knowledge graph completion</title>
+    <link href="http://example.com/2023/03/17/modeling-path-information-for-knowledge-graph-completion/"/>
+    <id>http://example.com/2023/03/17/modeling-path-information-for-knowledge-graph-completion/</id>
+    <published>2023-03-17T07:36:51.406Z</published>
+    <updated>2023-03-17T07:39:35.134Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;figure&gt;
+&lt;img src=&quot;\images\typora-user-images\image-20220308152758157.png&quot; alt=&quot;image-20220308152758157&quot;&gt;
+&lt;figcaption</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>A Path-based Interaction Model for Few-shot Knowledge Graph Completion</title>
+    <link href="http://example.com/2023/03/17/a-path-based-interaction-model-for-few-shot-knowledge-graph-completion/"/>
+    <id>http://example.com/2023/03/17/a-path-based-interaction-model-for-few-shot-knowledge-graph-completion/</id>
+    <published>2023-03-17T07:36:51.229Z</published>
+    <updated>2023-03-17T07:39:00.461Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;figure&gt;
+&lt;img src=&quot;\images\typora-user-images\image-20220306201557199.png&quot; alt=&quot;image-20220306201557199&quot;&gt;
+&lt;figcaption</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Research progress of zero-shot learning</title>
+    <link href="http://example.com/2023/03/17/research-progress-of-zero-shot-learning/"/>
+    <id>http://example.com/2023/03/17/research-progress-of-zero-shot-learning/</id>
+    <published>2023-03-17T07:36:51.031Z</published>
+    <updated>2023-03-17T07:37:44.433Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;center&gt;
+&lt;strong&gt;Research progress of zero-shot learning&lt;/strong&gt;
+&lt;/center&gt;
+&lt;center&gt;
+零样本学习的研究进展
+&lt;/center&gt;
+&lt;hr&gt;
+&lt;h4</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>A Generative Adversarial Approach for Zero-Shot Learning from Noisy Texts</title>
+    <link href="http://example.com/2023/03/17/a-generative-adversarial-approach-for-zero-shot-learning-from-noisy-texts/"/>
+    <id>http://example.com/2023/03/17/a-generative-adversarial-approach-for-zero-shot-learning-from-noisy-texts/</id>
+    <published>2023-03-17T07:36:50.820Z</published>
+    <updated>2023-03-17T07:37:19.904Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;center&gt;
+&lt;strong&gt;A Generative Adversarial Approach for Zero-Shot Learning from
+Noisy</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Structure-Augmented Text Representation Learning for Efficient Knowledge Graph Completion</title>
+    <link href="http://example.com/2023/03/17/structure-augmented-text-representation-learning-for-efficient-knowledge-graph-completion/"/>
+    <id>http://example.com/2023/03/17/structure-augmented-text-representation-learning-for-efficient-knowledge-graph-completion/</id>
+    <published>2023-03-17T07:36:50.576Z</published>
+    <updated>2023-03-17T07:40:26.873Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;figure&gt;
+&lt;img src=&quot;\images\typora-user-images\image-20220509150128444.png&quot; alt=&quot;image-20220509150128444&quot;&gt;
+&lt;figcaption</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Open-World Knowledge Graph Completion</title>
+    <link href="http://example.com/2023/03/17/open-world-knowledge-graph-completion/"/>
+    <id>http://example.com/2023/03/17/open-world-knowledge-graph-completion/</id>
+    <published>2023-03-17T07:29:46.709Z</published>
+    <updated>2023-03-17T07:36:47.818Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;center&gt;
+&lt;strong&gt;Open-World Knowledge Graph Completion&lt;/strong&gt;
+&lt;/center&gt;
+&lt;center&gt;
+开放世界知识图谱补全
+&lt;/center&gt;
+&lt;hr&gt;
+&lt;h4</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>KBGAN Adversarial Learning for Knowledge Graph Embeddings</title>
+    <link href="http://example.com/2023/03/17/adversarial-learning-for-knowledge-graph-embeddings/"/>
+    <id>http://example.com/2023/03/17/adversarial-learning-for-knowledge-graph-embeddings/</id>
+    <published>2023-03-17T07:29:46.582Z</published>
+    <updated>2023-03-17T07:36:20.196Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;center&gt;
+&lt;strong&gt;KBGAN: Adversarial Learning for Knowledge Graph
+Embeddings&lt;/strong&gt;
+&lt;/center&gt;
+&lt;center&gt;
+知识图谱嵌入的对抗式学习
+&lt;/center&gt;
+&lt;hr&gt;
+&lt;h4</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Cognitive Knowledge Graph Reasoning for One-shot Relational Learning</title>
+    <link href="http://example.com/2023/03/17/cognitive-knowledge-graph-reasoning-for-one-shot-relational-learning/"/>
+    <id>http://example.com/2023/03/17/cognitive-knowledge-graph-reasoning-for-one-shot-relational-learning/</id>
+    <published>2023-03-17T07:29:46.410Z</published>
+    <updated>2023-03-17T07:35:35.170Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;center&gt;
+&lt;strong&gt;Cognitive Knowledge Graph Reasoning for One-shot</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Knowledge Graph Attention Network for Recommendation</title>
+    <link href="http://example.com/2023/03/17/knowledge-graph-attention-network-for-recommendation/"/>
+    <id>http://example.com/2023/03/17/knowledge-graph-attention-network-for-recommendation/</id>
+    <published>2023-03-17T07:29:46.230Z</published>
+    <updated>2023-03-17T07:46:10.616Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;center&gt;
+&lt;strong&gt;KGAT: Knowledge Graph Attention Network</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Relational Learning with Gated and Attentive Neighbor Aggregator for Few-Shot Knowledge Graph Completion</title>
+    <link href="http://example.com/2023/03/17/relational-learning-with-gated-and-attentive-neighbor-aggregator-for-few-shot-knowledge-graph-completion/"/>
+    <id>http://example.com/2023/03/17/relational-learning-with-gated-and-attentive-neighbor-aggregator-for-few-shot-knowledge-graph-completion/</id>
+    <published>2023-03-17T07:29:45.855Z</published>
+    <updated>2023-03-17T07:33:46.088Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;center&gt;
+&lt;strong&gt;Relational Learning with Gated and Attentive Neighbor Aggregator
+for Few-Shot Knowledge Graph</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Generative Adversarial Zero-Shot Relational Learning for Knowledge Graphs</title>
+    <link href="http://example.com/2023/03/17/generative-adversarial-zero-shot-relational-learning-for-knowledge-graphs/"/>
+    <id>http://example.com/2023/03/17/generative-adversarial-zero-shot-relational-learning-for-knowledge-graphs/</id>
+    <published>2023-03-17T07:29:45.645Z</published>
+    <updated>2023-03-17T07:32:59.052Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;center&gt;
+&lt;strong&gt;Generative Adversarial Zero-Shot Relational Learning for
+Knowledge</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Few-Shot Adaptation of Generative Adversarial Networks</title>
+    <link href="http://example.com/2023/03/17/few-shot-adaptation-of-generative-adversarial-networks/"/>
+    <id>http://example.com/2023/03/17/few-shot-adaptation-of-generative-adversarial-networks/</id>
+    <published>2023-03-17T07:29:45.454Z</published>
+    <updated>2023-03-17T07:32:28.693Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;center&gt;
+&lt;strong&gt;Few-Shot Adaptation of Generative Adversarial Networks&lt;/strong&gt;
+&lt;/center&gt;
+&lt;center&gt;
+生成性对抗网络的小样本适应
+&lt;/center&gt;
+&lt;hr&gt;
+&lt;h4</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Task-Agnostic Meta-Learning for Few-shot Learning</title>
+    <link href="http://example.com/2023/03/17/task-agnostic-meta-learning-for-few-shot-learning/"/>
+    <id>http://example.com/2023/03/17/task-agnostic-meta-learning-for-few-shot-learning/</id>
+    <published>2023-03-17T07:29:45.244Z</published>
+    <updated>2023-03-17T07:31:52.732Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;center&gt;
+&lt;strong&gt;Task-Agnostic Meta-Learning for Few-shot Learning&lt;/strong&gt;
+&lt;/center&gt;
+&lt;center&gt;
+用于小样本学习的任务不可知元学习
+&lt;/center&gt;
+&lt;hr&gt;
+&lt;h4</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Adaptive Attentional Network for Few-Shot Knowledge Graph Completion</title>
+    <link href="http://example.com/2023/03/17/adaptive-attentional-network-for-few-shot-knowledge-graph-completion/"/>
+    <id>http://example.com/2023/03/17/adaptive-attentional-network-for-few-shot-knowledge-graph-completion/</id>
+    <published>2023-03-17T07:29:13.451Z</published>
+    <updated>2023-03-17T07:30:15.266Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;center&gt;
+&lt;strong&gt;Adaptive Attentional Network for Few-Shot Knowledge</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>One-Shot Relational Learning for Knowledge Graphs</title>
+    <link href="http://example.com/2023/03/17/one-shot-relational-learning-for-knowledge-graphs/"/>
+    <id>http://example.com/2023/03/17/one-shot-relational-learning-for-knowledge-graphs/</id>
     <published>2023-03-17T05:59:24.957Z</published>
-    <updated>2023-03-17T05:59:24.957Z</updated>
+    <updated>2023-03-17T07:30:48.954Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt;</summary>
+    <summary type="html">&lt;center&gt;
+&lt;strong&gt;One-Shot Relational Learning for Knowledge Graphs&lt;/strong&gt;
+&lt;/center&gt;
+&lt;center&gt;
+知识图谱的小样本关系学习
+&lt;/center&gt;
+&lt;h4</summary>
         
       
     

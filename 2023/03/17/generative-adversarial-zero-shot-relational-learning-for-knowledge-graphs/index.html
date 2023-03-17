@@ -4,8 +4,17 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Hello World, Ricardo的博客">
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex">
+    <meta name="keywords" content="Generative Adversarial Zero-Shot Relational Learning for Knowledge Graphs, Ricardo的博客">
+    <meta name="description" content="
+Generative Adversarial Zero-Shot Relational Learning for
+Knowledge Graphs
+
+
+知识图谱的生成性对抗零样本关系学习
+
+
+Abstract
+在本文中，我们考虑一个新方法">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +26,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Hello World | Ricardo的博客</title>
+    <title>Generative Adversarial Zero-Shot Relational Learning for Knowledge Graphs | Ricardo的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -337,12 +346,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hello World</h1>
+                    <h1 class="description center-align post-title">Generative Adversarial Zero-Shot Relational Learning for Knowledge Graphs</h1>
                 </div>
             </div>
         </div>
@@ -387,7 +396,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    73
+                    2.9k
                 </div>
                 
 
@@ -407,19 +416,135 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo generate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo deploy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+                <center>
+<strong>Generative Adversarial Zero-Shot Relational Learning for
+Knowledge Graphs</strong>
+</center>
+<center>
+知识图谱的生成性对抗零样本关系学习
+</center>
+<hr>
+<h4 id="abstract">Abstract</h4>
+<p>在本文中，我们考虑一个新方法，零样本学习。对于新添加的关系，我们试图从它们的文本描述中学习它们的语义特征，从而==在没有看到示例的情况下==识别出看不见的关系的事实。为此，我们利用生成性对抗网络(GAN)建立文本和知识图谱之间的联系：<br>生成器(generator)仅通过嘈杂的文本描述学习生成合理的关系嵌入。在此设置下，零样本学习自然转化为传统的有监督分类任务。从经验上看，我们的方法是模型无关的，可以潜在地应用于任何版本的KG嵌入。</p>
+<h4 id="introduction">Introduction</h4>
+<p>新类的语义特征可以==通过它们的文本描述来反映，而不是从实例中学习==。此外，文本描述包含丰富而明确的信息，可以从字典、百科全书文章或各种在线资源中轻松访问，这对于大规模识别任务至关重要。</p>
+<p>==零样本学习的目标==：在训练阶段看不到任何实例的情况下识别出新的class(unseen
+class).</p>
+<p>==通过文本描述来提取语义特征，而不是从实例中学习。==</p>
+<p>本文提出了一种知识图谱的零样本关系学习方法。我们将零样本学习转化为==知识转移(knowledge
+transfer)==问题。我们关注如何==仅从文本描述中为看不见的关系生成合理的关系嵌入==。一旦确定，该系统就能够为任意关系生成关系嵌入，而无需微调。通过这些关系嵌入，可以简单地通过余弦相似性识别不可见关系的事实。</p>
+<p>==知识转移(knowledge
+transfer)==：将从一个模型学到的知识压缩到另一个模型中。</p>
+<p>为了满足这些需求，第一个挑战是如何==建立从文本语义空间到知识图谱语义空间的有效知识转移过程==。我们利用条件GANs从文本描述生成貌似有理的(plausible)关系嵌入，并为不可见的关系提供类间多样性。<br>第二个挑战是==文本描述的噪声抑制==。人类的语言表达通常包括不相关的词(如虚词(function
+words))来识别目标关系。因此，不加区分的单词权重将导致较差的性能。针对这个问题，我们采用了==基于单词嵌入的简单词袋(bag-of-words)模型==；同时，我们计算TF-IDF特征，以降低相关性较低的单词对零样本学习的重要性。</p>
+<figure>
+<img src="\images\typora-user-images\image-20211107214004298.png" alt="image-20211107214004298">
+<figcaption aria-hidden="true">image-20211107214004298</figcaption>
+</figure>
+<p>贡献：</p>
+<ol type="1">
+<li>首先考虑零样本学习的知识图谱补全，并提出一个生成的对抗框架，仅仅使用文本描述为不可见的关系产生合理的关系嵌入；</li>
+<li>我们的方法是模型无关的(model-agnostic)，并且可以潜在地应用于KG嵌入的任何版本；</li>
+<li>我们给出了两个新构造的zero-shot知识图谱补全数据集，表明我们的方法比各种基于嵌入的方法具有更好的性能.</li>
+</ol>
+<h4 id="related-work">Related Work</h4>
+<ol type="1">
+<li>==KBGAN==：采用对抗式训练，通过选择高质量的负样本来学习更好的鉴别器，但它仍然关注现有关系的链接预测。</li>
+<li>==零样本学习(zero-shot
+learning，ZSL)==的核心是实现可见类和不可见类之间的==知识共享(knowledge
+sharing)和归纳迁移(inductive
+transfer)==，常见的解决方案是找到一个中间语义表示。</li>
+<li>ZSL框架：利用条件GANs模型实现图像分类任务的零样本学习。目前，ZSL的大部分研究工作都来自计算机视觉领域。在自然语言处理领域，Artetxe和Schwenk使用一个句子编码器，仅通过在一种语言上训练目标模型来完成多语言任务。</li>
+</ol>
+<h4 id="background">Background</h4>
+<h5 id="零样本学习设置">零样本学习设置</h5>
+<p>seen relation set：<img src="\images\typora-user-images\image-20211107221408935.png" alt="image-20211107221408935"><br>unseen relation set：<img src="\images\typora-user-images\image-20211107221434169.png" alt="image-20211107221434169"><br><img src="\images\typora-user-images\image-20211107221459265.png" alt="image-20211107221459265"></p>
+<p>背景知识图谱<img src="\images\typora-user-images\image-20211108123441390.png" alt="image-20211108123441390">，收集了大量的三元组，在零样本训练阶段可用。<br>利用这个知识图谱，为可见关系建立了训练集<img src="\images\typora-user-images\image-20211108123545501.png" alt="image-20211108123545501">，<img src="\images\typora-user-images\image-20211108123633566.png" alt="image-20211108123633566"><br>在测试过程中，所提出的模型用于预测不可见关系的关系事实，<img src="\images\typora-user-images\image-20211108123710613.png" alt="image-20211108123710613"></p>
+<p>对于文本描述，我们自动为<img src="\images\typora-user-images\image-20211108123814725.png" alt="image-20211108123814725">中的每个关系提取一个在线文本描述T<br>考虑到可行性，我们只考虑一组封闭的实体；更具体地说，出现在测试三元组中的每个实体仍然在实体集合E中.<br>测试集：
+<img src="\images\typora-user-images\image-20211108124037741.png" alt="image-20211108124037741"><img src="\images\typora-user-images\image-20211108123947038.png" alt="image-20211108123947038">.</p>
+<p>与训练过程的要求相同，需要通过将<img src="\images\typora-user-images\image-20211108124155916.png" alt="image-20211108124155916">与候选尾实体<img src="\images\typora-user-images\image-20211108124225053.png" alt="image-20211108124225053">进行排序来正确识别ground-truth尾实体<img src="\images\typora-user-images\image-20211108124155916.png" alt="image-20211108124155916">.</p>
+<p>通过删除验证关系的所有训练实例，我们省略了<img src="\images\typora-user-images\image-20211108124441636.png" alt="image-20211108124441636">的子集作为验证集<img src="\images\typora-user-images\image-20211108124454702.png" alt="image-20211108124454702">.</p>
+<h5 id="生成对抗模型">生成对抗模型</h5>
+<p>生成器(generator)的目的是从随机变量中合成合理的伪数据；<br>鉴别器(discriminator)的目的是将它们与真实数据区分开来。</p>
+<h4 id="methodology">Methodology</h4>
+<figure>
+<img src="\images\typora-user-images\image-20211108141723530.png" alt="image-20211108141723530">
+<figcaption aria-hidden="true">image-20211108141723530</figcaption>
+</figure>
+<p>核心：设计一个条件生成模型，从原始文本描述中学习合格的关系嵌入。</p>
+<p>生成器(generator)：以文本表示为输入，生成合理的关系嵌入，反映知识图谱特征空间中相应的关系语义信息。在此基础上，将不可见关系的预测转化为一个简单的有监督分类任务。</p>
+<p>鉴别器(discriminator)：试图将假数据从真实数据分布中分离出来，并识别关系类型。</p>
+<p>对于真实数据的表示，我们利用==特征编码器==从KG嵌入生成合理的真实数据分布。特征编码器从训练集中提前训练，并在对抗性训练过程中固定。</p>
+<h5 id="特征编码器">特征编码器</h5>
+<p>在训练期间，传统的KG嵌入完全符合相关事实；然而，最优零样本特征表示应该为可见和不可见的关系事实提供簇结构(cluster-structure)分布。因此，我们设计了一个特征编码器，从预训练的KG嵌入和一跳结构中学习更好的数据分布。</p>
+<h6 id="网络体系结构">网络体系结构</h6>
+<figure>
+<img src="\images\typora-user-images\image-20211108142339418.png" alt="image-20211108142339418">
+<figcaption aria-hidden="true">image-20211108142339418</figcaption>
+</figure>
+<p>特征编码器由两个子编码器组成，==相邻编码器==和==实体编码器==。</p>
+<p>对于每个实体e，我们只考虑其一跳邻居<img src="\images\typora-user-images\image-20211108142252023.png" alt="image-20211108142252023">.因此，我们采用相邻编码器来生成结构表示。<br>给出了一个维数为d的KG嵌入矩阵，我们首先利用嵌入层查找相应的邻居实体<img src="\images\typora-user-images\image-20211108142442713.png" alt="image-20211108142442713">和关系嵌入<img src="\images\typora-user-images\image-20211108142517502.png" alt="image-20211108142517502">.然后，计算实体e的基于结构的表示<img src="\images\typora-user-images\image-20211108143109336.png" alt="image-20211108143109336">:</p>
+<figure>
+<img src="\images\typora-user-images\image-20211108143143856.png" alt="image-20211108143143856">
+<figcaption aria-hidden="true">image-20211108143143856</figcaption>
+</figure>
+<p>考虑到可伸缩性，我们设置了邻居数量的上限。</p>
+<p>此外，我们还使用一个简单的前馈(feed-forward)层作为实体编码器，从实体对<img src="\images\typora-user-images\image-20211108143429061.png" alt="image-20211108143429061">本身提取信息.</p>
+<figure>
+<img src="\images\typora-user-images\image-20211108143443960.png" alt="image-20211108143443960">
+<figcaption aria-hidden="true">image-20211108143443960</figcaption>
+</figure>
+<p>关系事实表示形式为相邻嵌入<img src="\images\typora-user-images\image-20211108143557403.png" alt="image-20211108143557403">和实体对嵌入<img src="\images\typora-user-images\image-20211108143542336.png" alt="image-20211108143542336">的连结(concatenation)：</p>
+<figure>
+<img src="\images\typora-user-images\image-20211108143642142.png" alt="image-20211108143642142">
+<figcaption aria-hidden="true">image-20211108143642142</figcaption>
+</figure>
+<p>可学习参数：<img src="\images\typora-user-images\image-20211108143702424.png" alt="image-20211108143702424">.</p>
+<h6 id="预训练策略">预训练策略</h6>
+<p>核心：学习反映较高类内的(intra-class)相似性和相对较低类间的(inter-class)相似性的簇结构数据分布。</p>
+<p>传统的基于交叉熵损失的监督方法给类间带来了太多的惩罚，对于不可见的类是不可行的。因此，我们通过边缘排名损失(margin
+ranking loss)采用有效的匹配方式.</p>
+<p>对于每个关系<img src="\images\typora-user-images\image-20211108144434444.png" alt="image-20211108144434444">，在一个训练步骤，我们首先随机从训练集抽取k个reference三元组<img src="\images\typora-user-images\image-20211108144652206.png" alt="image-20211108144652206">，从其余训练集中抽取一批正三元组<img src="\images\typora-user-images\image-20211108144721487.png" alt="image-20211108144721487">，以及一批负三元组<img src="\images\typora-user-images\image-20211108144737225.png" alt="image-20211108144737225">.</p>
+<p>然后使用特征编码器生成reference嵌入<img src="\images\typora-user-images\image-20211108144934311.png" alt="image-20211108144934311">，并分别以<img src="\images\typora-user-images\image-20211108144947680.png" alt="image-20211108144947680">和<img src="\images\typora-user-images\image-20211108145000467.png" alt="image-20211108145000467">作为<img src="\images\typora-user-images\image-20211108145022502.png" alt="image-20211108145022502">和<img src="\images\typora-user-images\image-20211108145042894.png" alt="image-20211108145042894">计算其余弦相似度。因此，边缘排名损失可描述如下：</p>
+<figure>
+<img src="\images\typora-user-images\image-20211108145109238.png" alt="image-20211108145109238">
+<figcaption aria-hidden="true">image-20211108145109238</figcaption>
+</figure>
+<p>要学习的参数集：<img src="\images\typora-user-images\image-20211108145132462.png" alt="image-20211108145132462">.</p>
+<h5 id="生成对抗模型-1">生成对抗模型</h5>
+<h6 id="生成器">生成器</h6>
+<p>生成器将从文本描述生成貌似可信的关系嵌入。<br>首先，对于文本表示，我们简单地采用词袋(bag-of-words)方法，即使用预先训练的单词嵌入对单词进行编码。为了抑制噪声信息，我们首先去除停止词和标点符号，然后通过TF-IDF特征评估其余单词的重要性。因此，文本嵌入<img src="\images\typora-user-images\image-20211108150206536.png" alt="image-20211108150206536">是由TF-IDF值加权的单词嵌入的向量和。为了满足GANs的要求，我们将每个文本嵌入与从高斯分布<img src="\images\typora-user-images\image-20211108150414880.png" alt="image-20211108150414880">中采样的随机向量<img src="\images\typora-user-images\image-20211108150359126.png" alt="image-20211108150359126">连接起来。</p>
+<p>知识转移过程由两个全连接层和一个层规范化操作完成。因此，关系嵌入<img src="\images\typora-user-images\image-20211108150737942.png" alt="image-20211108150737942">由生成器<img src="\images\typora-user-images\image-20211108150749209.png" alt="image-20211108150749209">与参数θ生成。为了避免模式崩溃和提高多样性，我们采用了Wasserstein损失和额外的分类损失(边缘排名损失).</p>
+<p>簇中心<img src="\images\typora-user-images\image-20211108151141788.png" alt="image-20211108151141788">被视为真实关系表示，其中<img src="\images\typora-user-images\image-20211108151207613.png" alt="image-20211108151207613">是关系r的事实数量。因此，从<img src="\images\typora-user-images\image-20211108151236539.png" alt="image-20211108151236539">和<img src="\images\typora-user-images\image-20211108151251869.png" alt="image-20211108151251869">计算出正分数；负面分数由<img src="\images\typora-user-images\image-20211108151236539.png" alt="image-20211108151236539">和负面事实表示计算得出，其中负面事实由污染尾部实体生成。</p>
+<p>此外，视觉轴正则化(visual pivot regularization)<img src="\images\typora-user-images\image-20211108151351985.png" alt="image-20211108151351985">也用于提供足够的类间区分:</p>
+<figure>
+<img src="\images\typora-user-images\image-20211108151526010.png" alt="image-20211108151526010">
+<figcaption aria-hidden="true">image-20211108151526010</figcaption>
+</figure>
+<h6 id="鉴别器">鉴别器</h6>
+<p>鉴别器试图==区分输入==是真实数据<img src="\images\typora-user-images\image-20211108151634394.png" alt="image-20211108151634394">还是虚假数据<img src="\images\typora-user-images\image-20211108151642411.png" alt="image-20211108151642411">.此外，还需要正确==识别==它们对应的==关系类型==。输入特性首先通过一个全连接层(Leaky
+ReLU)进行转换。接下来，有两个网络分支。第一个分支是一个FC层，它作为一个二元分类器来分离真实数据和虚假数据，我们还利用了Wasserstein损失。另一个分支是分类性能。为了稳定训练行为和消除模式崩溃，我们还采用了梯度惩罚(gradient
+penalty)<img src="\images\typora-user-images\image-20211108151912955.png" alt="image-20211108151912955">来强化Lipschitz约束。如果梯度范数偏离其目标范数值1，则会惩罚模型。<br>鉴别器的损失函数公式如下：</p>
+<figure>
+<img src="\images\typora-user-images\image-20211108152040744.png" alt="image-20211108152040744">
+<figcaption aria-hidden="true">image-20211108152040744</figcaption>
+</figure>
+<h5 id="预测不可见关系">预测不可见关系</h5>
+<p>经过对抗性训练，给定关系文本描述<img src="\images\typora-user-images\image-20211108152346626.png" alt="image-20211108152346626">，生成器可以生成貌似正确的关系嵌入<img src="\images\typora-user-images\image-20211108152417450.png" alt="image-20211108152417450">。对于查询元组<img src="\images\typora-user-images\image-20211108152428675.png" alt="image-20211108152428675">，相似度排序值得分<img src="\images\typora-user-images\image-20211108152445147.png" alt="image-20211108152445147">可以通过<img src="\images\typora-user-images\image-20211108152453684.png" alt="image-20211108152453684">和<img src="\images\typora-user-images\image-20211108152503805.png" alt="image-20211108152503805">之间的余弦相似度来计算。由于z可以无限期采样，我们可以生成任意数量的<img src="\images\typora-user-images\image-20211108152532556.png" alt="image-20211108152532556">个生成的关系嵌入<img src="\images\typora-user-images\image-20211108152607354.png" alt="image-20211108152607354">.<br>为了获得更好的泛化能力，我们使用平均余弦相似度值作为最终排名分数：</p>
+<figure>
+<img src="\images\typora-user-images\image-20211108152635841.png" alt="image-20211108152635841">
+<figcaption aria-hidden="true">image-20211108152635841</figcaption>
+</figure>
+<figure>
+<img src="\images\typora-user-images\image-20211108152735780.png" alt="image-20211108152735780">
+<figcaption aria-hidden="true">image-20211108152735780</figcaption>
+</figure>
+<p>未来工作：<br>1.词袋模型存在语义多样性不足的问题，尤其是当关系类型的理解需要在文本描述中考虑词序列信息时。<br>2.零样本设置基于统一的实体集。它可以理解为通过在现有实体节点之间添加看不见的关系边来扩展当前的大规模知识图。必须进一步考虑不可见的实体。</p>
+<p>问题：</p>
+<p>1.零样本学习的设置：通过文本描述提取出关系特征，而不是直接通过实例来进行学习，做文本描述的过程是?(提取上下文语义关系)，他直接提取了关系和实体之间的属性。<br>而我做的是通过邻居编码器提取他周围实体之间的属性了</p>
+<ol start="2" type="1">
+<li>centroid_matrix：对训练集中的每种关系形成了一个簇(提取关系和头尾实体的特征，然后求平均)，代表每种关系和实体之间的属性(是不是用这个地方就可以代表零样本了)==和词袋模型有关==</li>
+</ol>
 
                 
             </div>
@@ -446,7 +571,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2023/03/17/hello-world/">http://example.com/2023/03/17/hello-world/</a>
+                    <a href="http://example.com/2023/03/17/generative-adversarial-zero-shot-relational-learning-for-knowledge-graphs/">http://example.com/2023/03/17/generative-adversarial-zero-shot-relational-learning-for-knowledge-graphs/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -560,18 +685,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/03/17/hello-world/">
+                <a href="/2023/03/17/relational-learning-with-gated-and-attentive-neighbor-aggregator-for-few-shot-knowledge-graph-completion/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Relational Learning with Gated and Attentive Neighbor Aggregator for Few-Shot Knowledge Graph Completion">
                         
-                        <span class="card-title">Hello World</span>
+                        <span class="card-title">Relational Learning with Gated and Attentive Neighbor Aggregator for Few-Shot Knowledge Graph Completion</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -581,9 +705,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-03-17
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-03-17
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -592,7 +716,6 @@
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
@@ -600,16 +723,16 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/03/17/hello-world/">
+                <a href="/2023/03/17/few-shot-adaptation-of-generative-adversarial-networks/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="Few-Shot Adaptation of Generative Adversarial Networks">
                         
-                        <span class="card-title">Hello World</span>
+                        <span class="card-title">Few-Shot Adaptation of Generative Adversarial Networks</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -630,7 +753,6 @@
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
@@ -816,7 +938,7 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2019-2023</span>
+                <span id="year">2022-2023</span>
             
             <a href="/about" target="_blank">Ricardo Hao</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
@@ -825,23 +947,13 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">73</span>
+                        class="white-color">92.4k</span>
             
             
             
                 
             
             
-                <span id="busuanzi_container_site_pv">
-                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
-                    <span id="busuanzi_value_site_pv" class="white-color"></span>
-            </span>
-            
-            
-                <span id="busuanzi_container_site_uv">
-                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
-                    <span id="busuanzi_value_site_uv" class="white-color"></span>
-            </span>
             
             <br>
 
@@ -851,13 +963,13 @@
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/blinkfox" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <a href="https://github.com/610653652" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
     </a>
 
 
 
-    <a href="mailto:1181062873@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+    <a href="mailto:wuhao990115@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
         <i class="fas fa-envelope-open"></i>
     </a>
 
@@ -867,7 +979,7 @@
 
 
 
-    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1181062873" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1181062873" data-position="top" data-delay="50">
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=610653652" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 610653652" data-position="top" data-delay="50">
         <i class="fab fa-qq"></i>
     </a>
 

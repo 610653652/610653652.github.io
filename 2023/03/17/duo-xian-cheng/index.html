@@ -1,0 +1,1451 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="多线程面试题, Ricardo的博客">
+    <meta name="description" content="多线程
+1.Java中线程的实现方式？
+线程的创建分为四种方式：
+
+继承Thread类，重写run方法
+实现Runnable接口，重写run方法
+实现Callable重写call方法，配合FutureTask
+基于线程池构建线程
+
+追其底层">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>多线程面试题 | Ricardo的博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/reward.css">
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Ricardo的博客" type="application/atom+xml">
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Ricardo的博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Ricardo的博客</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">多线程面试题</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-03-17
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    8.7k
+                </div>
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="多线程">多线程</h2>
+<h4 id="java中线程的实现方式">1.Java中线程的实现方式？</h4>
+<p>线程的创建分为四种方式：</p>
+<ul>
+<li><strong>继承Thread类，重写run方法</strong></li>
+<li><strong>实现Runnable接口，重写run方法</strong></li>
+<li><strong>实现Callable重写call方法，配合FutureTask</strong></li>
+<li><strong>基于线程池构建线程</strong></li>
+</ul>
+<p>追其底层，其实都是实现Runnable实现的</p>
+<ul>
+<li><p>Thread类直接实现Runnable</p></li>
+<li><p>Callable实现方法是将Callable放到FutureTask中，而FutureTask实现RunnableFuture，而RunnableFuture又继承了Runnable（本质上还是Runnable）</p></li>
+<li><p>ThreadPoolExecutor每次构建都需要一个Worker类，而Worker类又实现了Runnable</p></li>
+</ul>
+<h4 id="java中线程的状态">2.Java中线程的状态？</h4>
+<p><strong>Java中线程状态分为6种</strong>：<strong>NEW</strong>、<strong>RUNNABLE</strong>、<strong>BLOCKED</strong>、<strong>WAITING</strong>、<strong>TIMED_WAITING</strong>、<strong>TERMINATED</strong></p>
+<figure>
+<img src="\images\typora-user-images\image-20230303074549613.png" alt="image-20230303074549613">
+<figcaption aria-hidden="true">image-20230303074549613</figcaption>
+</figure>
+<p>1.<strong>初始(NEW)</strong>：新创建了一个线程对象，但还没有调用start()方法。</p>
+<ol start="2" type="1">
+<li><p><strong>运行(RUNNABLE)</strong>：Java线程中将就绪（ready）和运行中（running）两种状态笼统的称为"运行"。线程对象创建后，其他线程(比如main线程）调用了该对象的start()方法。该状态的线程位于可运行线程池中，等待被线程调度选中，获取CPU的使用权，此时处于就绪状态（ready）。就绪状态的线程在获得CPU时间片后变为运行中状态（running）。</p></li>
+<li><p><strong>阻塞(BLOCKED)</strong>：表示线程阻塞于锁，表示运行时状态的线程的synchronized没有拿到资源，被放到EntryList中阻塞的状态。</p></li>
+<li><p><strong>等待(WAITING)</strong>：进入该状态的线程需要等待其他线程做出一些特定动作（通知或中断），它们要等待被显式地唤醒，否则会处于无限期等待的状态。。</p></li>
+<li><p><strong>超时等待(TIMED_WAITING)</strong>：该状态不同于WAITING，它可以在指定的时间后自行返回。</p></li>
+<li><p><strong>终止(TERMINATED)</strong>：表示该线程已经执行完毕。当线程的run()方法完成时，或者主线程的main()方法完成时，我们就认为它终止了。</p></li>
+</ol>
+<h4 id="java中如何停止线程">3.Java中如何停止线程？</h4>
+<ul>
+<li><strong>stop方法</strong>（不用）：强制让线程结束</li>
+<li><strong>使用共享变量（标志位）</strong>（很少使用）：通过修改共享变量在破坏循环，让线程退出循环，结束run方法。（需要在线程中给共享变量留判断入口）</li>
+<li><strong>interrupt</strong>：
+<ul>
+<li>在默认情况下，interrupt标记位为false，执行interrupt之后，标记位会变成true</li>
+<li>当线程正在休眠，此时修改interrupt标记位，则会抛出异常。</li>
+</ul></li>
+</ul>
+<h4 id="java中sleep和wait方法的区别">4.Java中sleep和wait方法的区别？</h4>
+<ul>
+<li><strong>所属类不同</strong>：sleep属于Thread类中的static方法；wait属于Object类的方法</li>
+<li><strong>唤醒方式不同</strong>：sleep属于TIMED_WAITING状态，休眠之后会自动被唤醒；wait属于WAITING状态，需要手动唤醒，也就是直到另一个线程调用了
+notify 或 notifyAll 之后，休眠的线程才能被唤醒。</li>
+<li><strong>释放锁资源不同</strong>：
+<ul>
+<li>sleep在持有锁时被执行，不会释放锁资源；wait在执行后，会释放锁资源</li>
+<li>sleep可以在持有锁或者不持有锁时执行；wait必须在持有锁时才可以执行
+<ul>
+<li>wait方法会将持有锁的线程从owner扔到WaitSet集合中，这个操作是在修改ObjectMonitor对象，如果没有持有synchronized锁的话，是无法操作ObjectMonitor对象的。</li>
+</ul></li>
+</ul></li>
+</ul>
+<h4 id="并发编程的三大特性">5.并发编程的三大特性？</h4>
+<ul>
+<li><strong>原子性</strong></li>
+</ul>
+<p>定义：
+原子性指一个操作是不可分割的，不可中断的，一个线程在执行时，另一个线程不会影响到他。</p>
+<p>保证原子性：synchronized、CAS、Lock锁、ThreadLocal（不让多线程操作临界资源，让每个线程操作属于自己的数据）</p>
+<ul>
+<li><strong>可见性</strong></li>
+</ul>
+<p>可见性问题是基于CPU位置出现的，CPU处理速度非常快，相对CPU来说，去主内存获取数据这个事情太慢了，CPU就提供了L1，L2，L3的三级缓存，每次去主内存拿完数据后，就会存储到CPU的三级缓存，每次去三级缓存拿数据，效率肯定会提升。</p>
+<p>这就带来了问题，现在CPU都是多核，每个线程的工作内存(CPU三级缓存)都是独立的，会告知每个线程中做修改时，只改自己的工作内存，没有及时的同步到主内存，导致数据不一致问题。</p>
+<p>解决：volatile：因为volatile所修饰的那块内存，对于它的任何修改另外一个线程立马可见，被volatile修饰的内存，线程每次读取都从内存里面读取一遍，这样就能获得最新的被volatile修饰的那块内存的值，所以一个线程改了以后另一个线程立马可见。此外，还有synchronized，Lock，final可以解决可见性问题。</p>
+<ul>
+<li><strong>有序性</strong></li>
+</ul>
+<p>在Java中，java文件中的内容会被编译，在执行前需要再次转为CPU可以识别的指令，CPU在执行这些指令时，为了提升执行效率，在不影响最终结果的前提下
+(满足一些要求)，会对指令进行重排。</p>
+<p>保证有序性：</p>
+<p>​ 1.happens-before：可以通过happen-before的原则去避免指令重排</p>
+<p>​
+2.volatile：如果需要让程序对某一个属性的操作不出现指令重排，除了满足happens-before原则之外，还可以基于volatile修饰属性，从而对这个属性的操作，就不会出现指令重排的问题了。volatile通过将内存屏障看成一条指令，在两个操作之间添加上一道指令，这个指令就可以避免上下执行的其他指令进行重排序。从而实现的禁止指令重排。</p>
+<p>​</p>
+<h4 id="什么是cas有什么优缺点">6.什么是CAS？有什么优缺点？</h4>
+<p>CAS（compare and
+swap）：就是比较和交换，他是一条CPU的并发原语，用于保证并发编程的原子性。</p>
+<p>CAS是一种基于锁的操作，而且是一种乐观锁。他在替换内存的某个位置的值时，首先查看内存中的值与预期值是否一致，如果一致，执行替换操作。</p>
+<p>CAS执行步骤：</p>
+<p>1.修改前记录数据的内存地址V；</p>
+<p>2.读取数据的当前的值，记录为A；</p>
+<p>3.修改数据的值变为B；</p>
+<p>4.查看地址V下的值是否仍然为A，若为A，则用B替换它；若地址V下的值不为A，表示在自己修改的过程中，其他的线程对数据进行了修改，则不更新变量的值，而是重新从步骤2开始执行，这被称为<strong>自旋</strong>；</p>
+<p>优点：CAS是一种乐观锁，不需要加锁就能进行原子操作。相比于传统的synchronized，它可以避免线程的挂起和唤醒，带来用户态和内核态切换的成本。</p>
+<p>缺点：</p>
+<p>1.自旋时间过长问题：多个线程争夺同一个资源时，如果自旋一直不成功，将会一直占用CPU。</p>
+<p>解决方案：指定CAS执行次数，超过次数直接失败/挂起线程（增加自旋锁）</p>
+<p>2.ABA问题：指比如有两个线程一个快，一个慢。快线程将初始A变量改为B，然后又将B改成了A，此时慢线程以为初始变量没有改变过一直是A，继续在此版本上进行修改，但此时A已经不是初始的A了，在业务中可能会出现问题。</p>
+<p>解决方案：增加版本号</p>
+<h4 id="contended注解有什么用">7.@Contended注解有什么用？</h4>
+<p>这个注解是为了解决伪共享的问题（解决缓存行同步带来的性能问题）</p>
+<p>CPU在操作主内存变量前，会将主内在数据缓存到CPU缓存 (L1,L2,L3) 中</p>
+<p>CPU缓存L1，是以缓存行为单位存储数据的，一般默认的大小为64字节。</p>
+<p>缓存行同步操作，影响CPU一定的性能（当缓存行中其他数据改变时，会怀疑缓存行内想要获取的数据是否也跟着改变了，可能会造成数据不一致的问题，就需要做缓存行同步的操作），<span class="citation" data-cites="Contented注解就是来解决这个问题的">@Contented注解就是来解决这个问题的</span>。</p>
+<p><span class="citation" data-cites="Contented注解">@Contented注解</span>，会将当前类中的属性，会独占一个缓存行，从而避免缓存行失效造成的性能问题</p>
+<p><span class="citation" data-cites="Contented注解">@Contented注解</span>，就是将一个缓存行的后面7个位置，填充上7个没有意义的数据。</p>
+<h4 id="java中的四种引用类型">8.Java中的四种引用类型</h4>
+<ul>
+<li><strong>强引用</strong>：在Java中最常见的就是强引用，把一个对象赋给一个引用变量，这个引用变量就是一个强引用。当一个对象被强引用变量引用时，它始终处于可达状态，它是不可能被垃圾回收机制回收的，即使该对象以后永远都不会被用到JVM也不会回收。因此强引用是造成
+Java内存泄漏的主要原因之一。</li>
+<li><strong>软引用</strong>：对于只有软引用的对象来说，当系统内存足够时它不会被回收，当系统内存空间不足时它会被回收。软引用通常用在对内存敏感的程序中，作为缓存使用。SoftReference</li>
+<li><strong>弱引用</strong>：弱引用比软引用的生存期更短，对于只有弱引用的对象来说，只要垃圾回收机制一运行，不管JVM的内存空间是否足够，总会回收该对象占用的内存。可以解决内存泄漏问题，ThreadLocal就是基于弱引用解决内存泄漏的问题。</li>
+<li><strong>虚引用</strong>：虚引用不能单独使用，必须和引用队列联合使用。虚引用的主要作用是跟踪对象被垃圾回收的状态。</li>
+</ul>
+<h4 id="threadlocal的内存泄漏问题">9.ThreadLocal的内存泄漏问题</h4>
+<p>ThreadLocal内存泄漏的原因主要是因为ThreadLocal中包含了ThreadLocalMap，然而ThreadLocalMap的对象是在Thread中的，如果Thread没有结束，则ThreadLocalMap一直不会释放，假如ThreadLocalMap中设置了很多值，而且没有手动设置remove()，则可能会造成内存泄露。</p>
+<p>ThreadLocalMap中又维护了一个key-value形式的Entry对象，key指向了当前ThreadLocal对象，value就是我们实际在ThreadLocal中存储的值。所以，在当前线程正在运行的时候，发生GC时，在ThreadLocal对象没有被其它地方强引用时，key指向ThreadLocal的弱引用就会立即断开（被垃圾回收掉）。这时，就会出现ThreadLocalMap中存在key为null的Entry（但是value仍然存在），只要当前线程不结束，该ThreadLocalMap对象就会一直存在，永远无法回收（因为此时还存在一条强引用的链路）。所以这个时候就造成了内存泄露。</p>
+<p>key内存泄漏：key如果使用强引用断不开就会造成key内存泄漏，ThreadLocal使用弱引用已经解决了</p>
+<p>value内存泄漏：使用线程池，导致线程对象存在但是找不到里面具体的value</p>
+<p>解决方案：在线程使用完ThreadLocal后调用remove()，把ThreadLocalMap里的某个Entry直接移除掉</p>
+<h4 id="java中锁的分类">10.Java中锁的分类</h4>
+<ul>
+<li><p><strong>可重入锁、不可重入锁</strong></p>
+<ul>
+<li>可重入：当前线程获取到A锁，在获取之后尝试再次获取A锁是可以直接拿到的。Java中提供的synchronized，ReentrantLock，ReentrantReadWriteLock都是可重入锁。</li>
+<li>不可重入：当前线程获取到A锁，在获取之后尝试再次获取A锁，无法获取到的，因为A锁被当前线程占用着，需要等待自己释放锁再获取锁。</li>
+</ul></li>
+<li><p><strong>乐观锁、悲观锁</strong></p>
+<ul>
+<li>悲观锁：获取不到锁资源时，会将当前线程挂起（进入BLOCKED、WAITING），线程挂起会涉及到用户态和内核态的切换，而这种切换是比较消耗资源的。Java中提供的synchronized，ReentrantLock，ReentrantReadWriteLock都是悲观锁。
+<ul>
+<li>用户态：JVM可以自行执行的指令，不需要借助操作系统执行。</li>
+<li>内核态：JVM不可以自行执行，需要操作系统才可以执行。</li>
+</ul></li>
+<li>乐观锁：获取不到锁资源，可以再次让CPU调度，重新尝试获取锁资源。Java中提供的CAS操作，就是乐观锁的一种实现。</li>
+</ul></li>
+<li><p><strong>公平锁、非公平锁</strong></p>
+<ul>
+<li><p>公平锁：线程A获取到了锁资源，线程B没有拿到，线程B去排队，线程C来了，锁被A持有，同时线程B在排队。直接排到B的后面，等待B拿到锁资源或者是B取消后，才可以尝试去竞争锁资源。</p></li>
+<li><p>非公平锁：线程A获取到了锁资源，线程B没有拿到，线程B去排队，线程C来了，先尝试竞争一波</p>
+<ul>
+<li>拿到锁资源：开心，插队成功。</li>
+<li>没有拿到锁资源：依然要排到B后面，等待B拿到锁资源或是B取消后，才可以尝试去竞争锁资源。</li>
+</ul>
+<p>Java中提供的ReentrantLock，ReentrantReadWriteLock可以实现公平锁和非公平锁。</p>
+<p>Java中提供的synchronized只能是非公平锁。</p></li>
+</ul></li>
+<li><p><strong>互斥锁、共享锁</strong></p>
+<ul>
+<li><p>互斥锁：同一时间点，只会有一个线程持有者当前互斥锁。</p></li>
+<li><p>共享锁：同一时间点，当前共享锁可以被多个线程同时持有。</p>
+<p>Java中提供的synchronized、ReentrantLock是互斥锁。</p>
+<p>Java中提供的ReentrantReadWriteLock，有互斥锁也有共享锁。</p></li>
+</ul></li>
+</ul>
+<h4 id="synchronized在jdk1.6中的优化">11.synchronized在JDK1.6中的优化</h4>
+<ul>
+<li><p><strong>锁消除</strong>：在eynchronized修饰的代码中，如果不存在操作临界资源的情况，会触发锁消除，你即便写了synchronized，他也不会触发。</p></li>
+<li><p><strong>锁膨胀</strong>：如果在一个循环中，频繁的获取和释放做资源，这样带来的消耗很大，锁膨胀就是将锁的范围扩大，避免频繁的竞争和获取锁资源带来不必要的消耗。</p></li>
+<li><p><strong>锁升级</strong>：synchronized在JDK1.6之前，完全就是获取不到锁，立即挂起当前线程，所以synchronized性能比较差。synchronized就在JDK1.6做了锁升级的优化</p>
+<ul>
+<li><strong>无锁、匿名偏向</strong>：当前对象没有作为锁存在。</li>
+<li><strong>偏向锁</strong>：如果当前锁资源，只有一个线程在频繁的获取和释放，那么这个线程过来，只需要判断，当前指向的线程是否是当前线程。
+<ul>
+<li>如果是，直接拿着锁资源走。</li>
+<li>如果当前线程不是我，基于CAS的方式，尝试将偏向锁指向当前线程。如果获取不到，触发锁升级，升级为轻量级锁。（偏向锁状态出现了锁竞争的情况）</li>
+</ul></li>
+<li><strong>轻量级锁</strong>：会采用自旋锁的方式去频繁的以CAS的形式获取锁资源(采用的是<strong>自适应自旋锁</strong>)
+<ul>
+<li>如果成功获取到，拿着锁资源走</li>
+<li>如果自旋了一定次数，没拿到锁资源，锁升级。</li>
+</ul></li>
+<li><strong>重量级锁</strong>：就是最传统的synchronized方式，拿不到锁资源，就挂起当前线程。
+(用户态&amp;内核态)</li>
+</ul></li>
+</ul>
+<h4 id="synchronized的实现原理">12.synchronized的实现原理</h4>
+<p>synchronized的作用是保证在同一时刻，
+被修饰的代码块或方法只会有一个线程执行，以达到保证并发安全的效果。</p>
+<p>synchronized的底层实现是完全依赖JVM虚拟机的，Java虚拟机是通过进入和退出Monitor对象来实现代码块同步和方法同步的，代码块同步使用的是<code>monitorenter</code>和
+<code>monitorexit</code>
+指令实现的，而方法同步是通过<code>Access flags</code>后面的标识来确定该方法是否为同步方法。</p>
+<ul>
+<li><strong>Java对象头</strong>
+<ul>
+<li>在JVM虚拟机中，对象在内存中的存储布局，可以分为三个区域：对象头(Header)、实例数据(Instance
+Data)、对齐填充(Padding)</li>
+<li>Java对象头主要包括两部分数据：类型指针和标记字段。</li>
+<li>标记字段用于存储对象自身的运行时数据，如哈希码（HashCode）、GC分代年龄、锁状态标志、线程持有的锁、偏向线程
+ID、偏向时间戳等等,它是实现轻量级锁和偏向锁的关键。所以，很明显synchronized使用的锁对象是存储在Java对象头里的标记字段里。</li>
+</ul></li>
+<li><strong>Monitor</strong>
+<ul>
+<li><code>monitor</code>描述为对象监视器，可以类比为一个特殊的房间，这个房间中有一些被保护的数据，<code>monitor</code>保证每次只能有一个线程能进入这个房间进行访问被保护的数据，进入房间即为持有<code>monitor</code>，退出房间即为释放<code>monitor</code>。</li>
+<li>使用syncrhoized加锁的同步代码块在字节码引擎中执行时，主要就是通过锁对象的<code>monitor</code>的取用(<code>monitorenter</code>)与释放(<code>monitorexit</code>)来实现的。</li>
+<li><code>monitorenter</code>指令在编译后插入到同步代码块开始位置，而<code>monitorexit</code>插入到方法结束与异常处，JVM保证每个<code>monitorenter</code>必须有相应<code>monitorexit</code>与之配对。任何对象有一个<code>monitor</code>与之关联，当一个<code>monitor</code>被持有后，它处于锁定状态。</li>
+</ul></li>
+</ul>
+<h4 id="什么是aqs">13.什么是AQS？</h4>
+<p>AQS是一个抽象的队列同步器，通过维护一个共享资源状态和一个先进先出的线程等待队列来实现一个多线程访问共享资源的同步框架。</p>
+<p>AQS
+为每个共享资源都设置一个共享资源锁，线程在需要访问共享资源时首先需要获取共享资源锁，如果获取到了共享资源锁，便可以在当前线程中使用该共享资源，如果获取不到，则将该线程放入线程等待队列，等待下一次资源调度。其本质上是AbstractQueuedSynchronizer抽象类，其实就是JUC包下的一个基类，JUC下的很多内容都是基于AQS实现了部分功能，比如ReentrantLock，ThreadPoolExecutor，阻塞队列，CountDownLatch，Semaphore，CyclicBarrier等等都是基于AQS实现。</p>
+<p>首先AQS中提供了一个由volatile修饰，并且采用CAS方式修改的int类型的state变量。</p>
+<p>其次AQS中维护了一个双向链表，有head，有tail，并且每个节点都是Node对象</p>
+<h4 id="aqs唤醒节点时为何要从后往前找">14.AQS唤醒节点时，为何要从后往前找？</h4>
+<ul>
+<li>插入节点的顺序：当前节点在插入到整个AQS队列中时，是先把当前节点的上一个指针指向我前面的节点，再把tail指向我。这时，前一个节点的指针指向null，如果从前往后找极大可能会错过某一个节点，造成检验丢失的问题</li>
+<li>在高并发情况下，线程A通过CAS进入if语句块之后，发生上下文切换，此时线程B同样执行了该方法，并且执行完毕。然后线程C调用了unparkSuccessor方法，假如是从头到尾的遍历形式，线程A的next指针此时还是null！也就是说，会出现后续节点被漏掉的情况。</li>
+<li>从后往前的情况下，在将当前节点置为尾部之前就已经把前驱节点赋值了，不会出现prev=null的情况。</li>
+</ul>
+<h4 id="reentrantlock和synchronized的区别">15.ReentrantLock和synchronized的区别？</h4>
+<p><strong>核心区别</strong>：</p>
+<ul>
+<li>ReentrantLock是个类，synchronized是关键字</li>
+</ul>
+<p><strong>效率区别</strong>：</p>
+<ul>
+<li>如果竞争比较激烈，推荐ReentrantLock去实现，不存在锁升级概念。而synchronized是存在锁升级概念的，如果升级到重量级锁，是不存在锁降级的。</li>
+</ul>
+<p><strong>底层实现区别</strong>：</p>
+<ul>
+<li>实现原理不一样，ReentrantLock基于AQS实现的，synchronized是基于ObjectMonitor</li>
+</ul>
+<p><strong>功能向的区别</strong>：</p>
+<ul>
+<li>ReentrantLock的功能比synchronized更全面
+<ul>
+<li>ReentrantLock支持公平锁和非公平锁</li>
+<li>ReentrantLock可以指定等待锁资源的时间</li>
+</ul></li>
+</ul>
+<p><strong>使用上的区别</strong>：</p>
+<ul>
+<li>ReentrantLock需要手动释放锁资源，synchronized不需要手动释放</li>
+</ul>
+<h4 id="reentreadwritelock的实现原理">16.ReentReadWriteLock的实现原理</h4>
+<p><em>（先从state上说，然后从重入的角度说）</em></p>
+<p>使用场景：操作是读多写少的还要保证线程安全</p>
+<p>功能：读读之间是不互斥的，可以读和读操作并发执行；但是如果涉及到了写操作，那么还得是互斥的操作。</p>
+<p><strong>底层实现</strong>：ReentrantReadWriteLock还是基于AQS实现的，还是对state进行操作，拿到锁资源就去干活，如果没有拿到，依然去AQS队列中排队。</p>
+<p><strong>读锁操作</strong>：基于state的高16位进行操作。
+<strong>写锁操作</strong>：基于state的低16位进行操作。</p>
+<p>ReentrantReadWriteLock依然是<strong>可重入锁</strong>。</p>
+<p><strong>写锁重入</strong>：读写锁中的写锁的重入方式，基本和ReentrantLock一致，没有什么区别，依然是对state进行+1操作即可，只要确认持有锁资源的线程，是当前写锁线程即可。只不过之前ReentrantLock的重入次数是state的正数取值范围，但是读写锁中写锁范围就变小了。</p>
+<p><strong>读锁重入</strong>：因为读锁是共享锁。读锁在获取锁资源操作时，是要对state的高16位进行
++
+1操作。因为读锁是共享锁，所以同一时间会有多个读线程持有读锁资源。这样一来，多个读操作在持有读锁时，无法确认每个线程读锁重入的次数。为了去记录读锁重入的次数，每个读操作的线程，都会有一个ThreadLocal记录锁重入的次数。</p>
+<p><strong>写锁的饥饿问题</strong>：读锁是共享锁，当有线程持有读锁资源时，再来一个线程想要获取读锁，直接对state修改即可。在读锁资源先被占用后，来了一个写锁资源，此时，大量的需要获取读锁的线程来请求锁资源，如果可以绕过写锁，直接拿资源，会造成写锁长时间无法获取到写锁资源。</p>
+<p>读锁在拿到锁资源后，如果再有读线程需要获取读锁资源，需要去AQS队列排队。如果队列的前面需要写锁资源的线程，那么后续读线程是无法拿到锁资源的。持有读锁的线程，只会让写锁线程之前的读线程拿到锁资源。</p>
+<h4 id="jdk中提供了哪些线程池">17.JDK中提供了哪些线程池？</h4>
+<ul>
+<li><p><strong>newFixedThreadPool</strong></p>
+<p>线程池数量固定。</p></li>
+<li><p><strong>newSingleThreadExecutor</strong></p>
+<p>单例线程池，线程池只有一个工作线程在处理任务。</p></li>
+<li><p><strong>newCachedThreadPool</strong></p>
+<p>它是可缓存的线程池，并且还会回收。它会把任务交给我们的线程，而且线程不够用的话，就会创建线程。如果线程过多，就会把这些线程给回收回来。</p></li>
+<li><p><strong>newScheduleThreadPool</strong></p>
+<p>它是支持定期和周期执行任务的，我们可以设置它每隔多长时间去执行任务。这个线程池用在我们的定时任务或者是用它来替代我们的定时器都是可以的。</p></li>
+<li><p><strong>newWorkStealingPool</strong></p>
+<p>JDK1.8引入的，创建时如果不设置任何参数，则以当前机器处理器个数作为线程个数，此线程池会并行处理任务，不能保证执行顺序。</p></li>
+</ul>
+<h4 id="线程池的核心参数有什么">18.线程池的核心参数有什么？</h4>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">ThreadPoolExecutor</span><span class="token punctuation">(</span>
+    <span class="token keyword">int</span> corePoolSize<span class="token punctuation">,</span>	<span class="token comment">//核心工作线程(当前任务执行结束后，不会被销毁)</span>
+	<span class="token keyword">int</span> maximumPoolSize<span class="token punctuation">,</span>	<span class="token comment">//最大工作线程(代表当前线程池中，一共可以有多少个工作线程)</span>
+	<span class="token keyword">long</span> keepAliveTime<span class="token punctuation">,</span>	<span class="token comment">//多余空闲线程的存活时间。非核心工作线程在阻塞队列位置等待的时间</span>
+	<span class="token class-name">TimeUnit</span> unit<span class="token punctuation">,</span>	<span class="token comment">//keepAliveTime的单位。非核心工作线程在阻塞队列位置等待时间的单位</span>
+	<span class="token class-name">BlockingQueue</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Runnable</span><span class="token punctuation">&gt;</span></span> workQueue<span class="token punctuation">,</span>	<span class="token comment">//里面放了被提交但是尚未执行的任务,任务在没有核心工作线程处理时，任务先扔到阻塞队列中	</span>
+    <span class="token class-name">ThreadFactory</span> threadFactory<span class="token punctuation">,</span>	<span class="token comment">//表示线程池中工作线程的线程工厂,用于创建线程,构建线程的线程工作,可以设置thread的一些信息		</span>
+    <span class="token class-name">ReiectedExecutionHandler</span> handler<span class="token punctuation">)</span><span class="token punctuation">{</span>	<span class="token comment">// 当线程池无法处理投递过来的任务时，执行当前的拒绝策略</span>
+    <span class="token comment">// 初始化线程池的模作</span>
+<span class="token punctuation">}</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="线程池的状态">19.线程池的状态</h4>
+<figure>
+<img src="\images\typora-user-images\image-20230303141714971.png" alt="image-20230303141714971">
+<figcaption aria-hidden="true">image-20230303141714971</figcaption>
+</figure>
+<ul>
+<li><strong>RUNNING</strong>：
+<ul>
+<li>能够接收新任务以及对已添加的任务进行处理。</li>
+<li>线程池的初始状态为RUNNING。线程池一旦被创建，就处于RUNNING状态，且线程池中的任务数为0</li>
+</ul></li>
+<li><strong>SHUTDOWN</strong>：
+<ul>
+<li>不接收新任务，但能处理已添加的任务</li>
+<li>调用线程池的shutdown()接口时，线程池由RUNNING-&gt;SHUTDOWN</li>
+</ul></li>
+<li><strong>STOP</strong>：
+<ul>
+<li>不接收新任务，不处理已添加的任务，并且会中断正在处理的任务</li>
+<li>调用线程池的shutdownNow()接口时，线程池由(RUNNING)或者(SHUTDOWN)-&gt;STOP</li>
+</ul></li>
+<li><strong>TIDYING</strong>：
+<ul>
+<li>当所有的任务已终止，ctl记录的任务数为0，线程池的状态会变为TIDYING状态；当线程池的状态变为TIDYING状态时，会调用钩子函数terminated()，该方法在ThreadPoolExecutor中是空的，若用户想在线程池变为TIDYING时进行相应的处理，就需要重载terminated()函数实现</li>
+<li>当线程池状态为SHUTDOWN时，阻塞队列为空并且线程池中执行的任务也为空时，就会由SHUTDOWN-&gt;TIDYING；当线程池为STOP时，线程池中执行的任务为空时，就会又STOP-&gt;TIDYING</li>
+</ul></li>
+<li><strong>TERMINATED</strong>：
+<ul>
+<li>线程池彻底终止，就会变成TERMINATED状态</li>
+<li>线程池处于TIDYING状态时，调用terminated()就会由TIDYING-&gt;TERMINATED</li>
+</ul></li>
+</ul>
+<h4 id="线程池的执行流程">20.线程池的执行流程？</h4>
+<figure>
+<img src="\images\typora-user-images\image-20230303142218115.png" alt="image-20230303142218115">
+<figcaption aria-hidden="true">image-20230303142218115</figcaption>
+</figure>
+<p><strong>优先核心线程、阻塞队列次之，最后非核心线程</strong></p>
+<p>1.提交任务后会首先进行当前工作线程数与核心线程数的比较，如果当前工作线程数小于核心线程数，则直接调用
+addWorker() 方法创建一个核心线程去执行任务；</p>
+<p>2.如果工作线程数大于核心线程数，即线程池核心线程数已满，则新任务会被添加到阻塞队列中等待执行，当然，添加队列之前也会进行队列是否为空的判断；</p>
+<p>3.如果线程池里面存活的线程数已经等于核心线程数了，且阻塞队列已经满了，再会去判断当前线程数是否已经达到最大线程数
+maximumPoolSize，如果没有达到，则会调用 addWorker()
+方法创建一个非核心线程去执行任务；</p>
+<p>4.如果当前线程的数量已经达到了最大线程数时，当有新的任务提交过来时，会执行拒绝策略</p>
+<h4 id="线程池添加工作线程的流程">21.线程池添加工作线程的流程？</h4>
+<p><strong>提交任务</strong></p>
+<p>当向线程池提交一个新的任务时，线程池有三种处理情况，分别是：创建一个工作线程来执行该任务、将任务加入阻塞队列、拒绝该任务。提交任务的过程也可以拆分成以下几个部分：当工作线程数小于核心线程数时，直接创建新的核心工作线程当工作线程数不小于核心线程数时，就需要尝试将任务添加到阻塞队列中去，如果能够加入成功，说明队列还没有满，那么需要做以下的二次验证来保证添加进去的任务能够成功被执行验证当前线程池的运行状态，如果是非RUNNING状态，则需要将任务从阻塞队列中移除，然后拒绝该任务验证当前线程池中的工作线程的个数，如果为0，则需要主动添加一个空工作线程来执行刚刚添加到阻塞队列中的任务如果加入失败，则说明队列已经满了，那么这时就需要创建新的"临时"工作线程来执行任务如果创建成功，则直接执行该任务如果创建失败，则说明工作线程数已经等于最大线程数了，则只能拒绝该任务了。</p>
+<p><strong>创建工作线程</strong></p>
+<p>创建工作线程需要做一系列的判断，需要确保当前线程池可以创建新的线程之后，才能创建。首先，当线程池的状态是
+SHUTDOWN 或者 STOP
+时，则不能创建新的线程。另外，当线程工厂创建线程失败时，也不能创建新的线程。还有就是当前工作线程的数量与核心线程数、最大线程数进行比较，如果前者大于后者的话，也不允许创建。除此之外，会尝试通过
+CAS 来自增工作线程的个数，如果自增成功了，则会创建新的工作线程，即
+Worker
+对象。然后加锁进行二次验证是否能够创建工作线程，最后如果创建成功，则会启动该工作线程。</p>
+<p><strong>启动工作线程</strong></p>
+<p>当工作线程创建成功后，也就是 Worker
+对象已经创建好了，这时就需要启动该工作线程，让线程开始干活了，Worker
+对象中关联着一个 Thread，所以要启动工作线程的话，只要通过
+worker.thread.start() 来启动该线程即可。启动完了之后，就会执行 Worker
+对象的 run 方法，因为 Worker 实现了 Runnable 接口，所以本质上 Worker
+也是一个线程。通过线程 start 开启之后就会调用到 Runnable 的 run 方法，在
+worker 对象的 run 方法中，调用了 runWorker(this)
+方法，也就是把当前对象传递给了 runWorker 方法，让他来执行。</p>
+<p><strong>获取任务并执行</strong></p>
+<p>在 runWorker
+方法被调用之后，就是执行具体的任务了，首先需要拿到一个可以执行的任务，而
+Worker
+对象中默认绑定了一个任务，如果该任务不为空的话，那么就是直接执行。执行完了之后，就会去阻塞队列中获取任务来执行，而获取任务的过程，需要考虑当前工作线程的个数。如果工作线程数大于核心线程数，那么就需要通过
+poll
+来获取，因为这时需要对闲置的线程进行回收;如果工作线程数小于等于核心线程数，那么就可以通过
+take
+来获取了，因此这时所有的线程都是核心线程，不需要进行回收，前提是没有设置
+allowCoreThreadTimeOut。</p>
+<h4 id="线程池为何要构建空任务的非核心线程">22.线程池为何要构建空任务的非核心线程？</h4>
+<ul>
+<li>当任务扔到阻塞队列中之后，工作线程个数为0，则需要添加一个空任务的非核心工作线程。</li>
+<li>工作线程已经启动后，会执行runworker方法，在runworker方法中工作线程要结束之后，会执行一次processWorkerExit方法，而这个方法内部添加一个空任务的非核心工作线程。</li>
+</ul>
+<p>出现场景：当把任务添加到工作队列或者阻塞队列当中之后，发现没有工作线程，此时线程池中的任务就会饥饿，没有线程能够处理阻塞队列当中的任务。则任务将会一直在阻塞队列中放置，直到有新任务添加进来，才有可能再去创建工作线程，才会执行放在阻塞队列中存放的任务。这样导致任务的处理实际太晚了。</p>
+<p>出现原因：</p>
+<p>1.在构建工作线程或者构建线程池对象的时候，会对参数做一些校验，其中核心线程数是不允许小于0的（但是可以等于0），这样导致核心线程数为0个，则在执行excute方法时，添加核心线程的操作就进不去，就会把任务扔到阻塞队列中去。</p>
+<p>2.核心线程默认情况下是不允许超时的（核心线程在处理完一个任务，即便空闲了多久，都不会把这个核心线程取消掉），但如果将allowCoreThreadTimeOut属性设置为true，则如果时间到了，核心线程就会被取消掉。</p>
+<h4 id="线程池使用完毕为何必须shutdown">23.线程池使用完毕为何必须shutdown()？</h4>
+<p><em>（先说不shutdown会出现什么问题，其次执行shutdown是如何帮助解决这个问题的）</em></p>
+<p>造成的问题：</p>
+<p>1.核心线程不会被回收，会造成内存泄漏问题</p>
+<p>2.Worker对象不会被回收，而Worker对象属于线程池的内部类，会造成整个线程池对象不会被回收</p>
+<p>如何解决：而执行shutdown()后，将线程池的状态从RUNNING改为了SHUTDOWN，所有阻塞的工作线程都会通过SHUTDOWN跳出获取内容</p>
+<h4 id="线程池的核心参数如何设置">24.线程池的核心参数如何设置？</h4>
+<p>因为任务类型有CPU密集型，IO密集型，甚至有混合型，因为IO我们无法直接控制，所以想要调试出一个符合任务情况的核心参数，最好的方式就是测试需要将项目部署到测试环境或者是沙箱环境像结果各种压测得到一个相对符合的参数。如果每次修改项目都需要重新部署，成本太高了。此时可以实现一个动态监控以及修改线程池的方案。</p>
+<p><strong>核心线程数，拒绝策略</strong>：通过线程池中提供的获取核心信息的get方法来测试CPU的负载情况，若CPU没有被压榨的太好，则可以通过线程池提供的动态修改核心属性的set方法来动态修改一些核心属性，此时线程池会根据内部的一些判断规则，很平滑的把线程池的核心参数调整到最新设置的程度</p>
+<p><strong>工作队列的长度</strong>：需要根据内存的情况查看最多可以做多少个任务，以及任务可以延迟多久来决定</p>
+<h4 id="concurrenthashmap在1.8做了什么优化">25.ConcurrentHashMap在1.8做了什么优化？</h4>
+<p>1.<strong>存储结构</strong>：将原先table数组＋单向链表的数据结构，变成table数组+单向链表+<strong>红黑树</strong>的结构。</p>
+<p>对于个数超过8(默认值)的列表，在jdk1.8中链表就会转化为红黑树，查询的时间复杂度可以降低到O(logN)，可以改进性能。</p>
+<p>2.<strong>存储操作</strong>：ConcurrentHashMap在JDK1.8中是以CAS+synchronized锁头节点的方式实现的线程安全。数组长度有多少，锁的级别就有多少。在没有hash冲突时
+（Node要放在数组上时），采用CAS；在出现hash冲突时（Node存放的位置已经有数据了），采用synchronized</p>
+<p>3.<strong>扩容操作</strong>：采取了协助扩容操作：如果正在扩容，则帮助扩容，加快扩容的效率。等扩容完毕后，将要写入的数据写到新数组上。</p>
+<p>4.<strong>计数器</strong>：1.8的计数器采用了分而治之的思想，将计数器拆分成多个，效率相比于之前会更高</p>
+<h4 id="concurrenthashmap">26.ConcurrentHashMap</h4>
+<ul>
+<li>散列算法</li>
+<li>初始化数组的流程</li>
+<li>扩容的流程</li>
+<li>读取数据的流程</li>
+<li>计数器的实现</li>
+</ul>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Ricardo Hao</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://example.com/2023/03/17/duo-xian-cheng/">http://example.com/2023/03/17/duo-xian-cheng/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Ricardo Hao</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2023/03/17/fen-bu-shi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="分布式面试题">
+                        
+                        <span class="card-title">分布式面试题</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-03-17
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Ricardo Hao
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/03/17/redis/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Redis面试题">
+                        
+                        <span class="card-title">Redis面试题</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-03-17
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Ricardo Hao
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2022-2023</span>
+            
+            <a href="/about" target="_blank">Ricardo Hao</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">92.4k</span>
+            
+            
+            
+                
+            
+            
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/610653652" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:wuhao990115@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=610653652" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 610653652" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+    
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

@@ -1,0 +1,2808 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="MySQL笔记分享, Ricardo的博客">
+    <meta name="description" content="[TOC]
+第1章 数据库概述
+1 关系型数据库设计规则
+1.1 表、记录、字段
+E-R（entity-relationship）模型中主要概念：实体集、属性、联系集
+ORM思想（Object Relational Mapping）：
+
+数">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>MySQL笔记分享 | Ricardo的博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/reward.css">
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Ricardo的博客" type="application/atom+xml">
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Ricardo的博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Ricardo的博客</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">MySQL笔记分享</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-03-17
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    13.5k
+                </div>
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>[TOC]</p>
+<h2 id="第1章-数据库概述">第1章 数据库概述</h2>
+<h3 id="关系型数据库设计规则">1 关系型数据库设计规则</h3>
+<h4 id="表记录字段">1.1 表、记录、字段</h4>
+<p>E-R（entity-relationship）模型中主要概念：实体集、属性、联系集</p>
+<pre class="line-numbers language-none"><code class="language-none">ORM思想（Object Relational Mapping）：
+
+数据库中的一个表 &lt;---&gt; Java或Python中的一个类
+
+表中的一条数据 &lt;---&gt; 类中的一个对象（或实体）
+
+表中的一个列 &lt;---&gt; 类中的一个字段、属性（field）<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="表的关联关系">1.2 表的关联关系</h4>
+<h5 id="一对一关系one-to-one">1.2.1 一对一关系（one-to-one）</h5>
+<h5 id="一对多关系one-to-many">1.2.2 一对多关系（one-to-many）</h5>
+<h5 id="多对多关系many-to-many">1.2.3 多对多关系（many-to-many）</h5>
+<h5 id="自我引用">1.2.4 自我引用</h5>
+<h2 id="第2章-基本的select语句">第2章 基本的SELECT语句</h2>
+<h3 id="sql概述">1 SQL概述</h3>
+<h4 id="sql分类">1.1 SQL分类</h4>
+<h5 id="ddldata-definition-languages数据定义语言">1.1.1 DDL（Data
+Definition Languages，数据定义语言）</h5>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">CREATE</span> \ <span class="token keyword">ALTER</span> \ <span class="token keyword">DROP</span> \ <span class="token keyword">RENAME</span> \ <span class="token keyword">TRUNCATE</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h5 id="dmldata-manipulation-language数据操作语言">1.1.2 DML（Data
+Manipulation Language，数据操作语言）</h5>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">INSERT</span> \ <span class="token keyword">DELETE</span> \ <span class="token keyword">UPDATE</span> \ <span class="token keyword">SELECT</span> <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h5 id="dcldata-control-language数据控制语言">1.1.3 DCL（Data Control
+Language，数据控制语言）</h5>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">COMMIT</span> \ <span class="token keyword">ROLLBACK</span> \ <span class="token keyword">SAVEPOINT</span> \ <span class="token keyword">GRANT</span> \ <span class="token keyword">REVOKE</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="sql语言的规则与规范">2 SQL语言的规则与规范</h3>
+<h4 id="基本规则">2.1 基本规则</h4>
+<h4 id="sql规范">2.2 SQL规范</h4>
+<h4 id="注释">2.3 注释</h4>
+<h4 id="命名规则">2.4 命名规则</h4>
+<h4 id="数据导入指令">2.5 数据导入指令</h4>
+<h5 id="source文件的全路径名">2.5.1 source文件的全路径名</h5>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">source d:\mysqldb.sql;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h5 id="基于具体的图形化界面工具导入数据">2.5.2
+基于具体的图形化界面工具导入数据</h5>
+<h3 id="基本的select语句">3 基本的SELECT语句</h3>
+<h4 id="select...">3.0 SELECT...</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT 1;
+SELECT 2*3;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h4 id="select...from...">3.1 SELECT...FROM...</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql"># *:表中所有的字段（或列）
+SELECT * FROM employees;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h4 id="列的别名">3.2 列的别名</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql"># as全称:alias(别名),可以省略
+# 列的别名可以使用一对""引起来
+SELECT employee_id emp_id,last_name AS lname,department_id "dep id"
+FROM employees;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="去除重复行">3.3 去除重复行</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT DISTINCT department_id
+FROM employees;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h4 id="空值参与运算">3.4 空值参与运算</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#空值:null
+#空值参与运算,其结果一定也为空
+SELECT employee_id,salary "月工资",salary*(1 + commission_pct) * 12 "年工资"
+FROM employees;
+#实际问题的解决方案:引入IFNULL
+SELECT employee_id,salary "月工资",salary*(1 + IFNULL(commission_pct,0)) * 12 "年工资"
+FROM employees;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="着重号">3.5 着重号</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql"># ``:避免表名和关键字重复
+SELECT * FROM `order`;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h4 id="查询常数">3.6 查询常数</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT 'constant',123,employee_id,last_name
+FROM employees;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="显示表结构">4 显示表结构</h3>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">DESCRIBE employees;
+DESC employees;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="过滤数据">5 过滤数据</h3>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#过滤条件WHERE:声明在FROM结构后面
+SELECT *
+FROM employees
+WHERE department_id = 90;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="第3章-运算符">第3章 运算符</h2>
+<h3 id="算数运算符">1 算数运算符</h3>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220094347610.png" alt="image-20221220094347610">
+<figcaption aria-hidden="true">image-20221220094347610</figcaption>
+</figure>
+<h4 id="加法与减法运算符">1.1 加法与减法运算符</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql"># 在SQL中，+ 没有连接的作用，只表示加法运算。此时，会将字符串转换为数值
+SELECT 100 + '1'
+FROM DUAL;
+
+SELECT 100 + 'a' #此时将'a'看作0处理
+FROM DUAL;
+
+SELECT 100 + NULL #null值参与运算,结果为null
+FROM DUAL;
+
+SELECT 100 DIV 0 #分母如果为0,则结果为null
+FROM DUAL;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="取模运算">1.2 取模运算</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#查询员工id为偶数的员工信息
+SELECT employee_id,last_name
+FROM employees
+WHERE employee_id % 2 = 0;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="比较运算符">2 比较运算符</h3>
+<h4 id="符号类运算符">2.1 符号类运算符</h4>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220095140881.png" alt="image-20221220095140881">
+<figcaption aria-hidden="true">image-20221220095140881</figcaption>
+</figure>
+<h5 id="section">2.1.1 =</h5>
+<p>1.字符串存在隐式转换。如果转换数值不成功，则看作0</p>
+<p>2.两边都是字符串的话，则按照ANSI的比较规则进行比较</p>
+<p>3.只要有null参与判断，结果就为null</p>
+<h5 id="section-1">2.1.2 &lt;=&gt;</h5>
+<p>两边操作数均为null时，返回值为1；当一个操作数为null时，返回值为0</p>
+<h4 id="非符号类运算符">2.2 非符号类运算符</h4>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220101511026.png" alt="image-20221220101511026">
+<figcaption aria-hidden="true">image-20221220101511026</figcaption>
+</figure>
+<h5 id="is-null-is-not-null-isnull">2.2.1 IS NULL &nbsp; IS NOT NULL &nbsp;
+ISNULL</h5>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT last_name,commission_pct
+FROM employees
+WHERE commission_pct IS NULL;
+
+SELECT last_name,commission_pct
+FROM employees
+WHERE ISNULL(commission_pct);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT last_name,commission_pct
+FROM employees
+WHERE commission_pct IS NOT NULL;
+
+SELECT last_name,commission_pct
+FROM employees
+WHERE NOT commission_pct &lt;=&gt; NULL;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="least-greatest">2.2.2 LEAST() &nbsp; GREATEST</h5>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT LEAST(first_name,last_name),LEAST(LENGTH(first_name),LENGTH(last_name))
+FROM employees;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h5 id="between-条件上界1-and-条件上界2">2.2.3 BETWEEN 条件上界1 AND
+条件上界2</h5>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#查询条件1和条件2范围内的数据，包含边界
+SELECT last_name,salary
+FROM employees
+WHERE salary BETWEEN 6000 AND 8000;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="in-set-not-in-set">2.2.4 in (set) &nbsp; not in (set)</h5>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT last_name,department_id
+FROM employees
+WHERE department_id IN (10,20,30);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h5 id="like模糊查询">2.2.5 LIKE：模糊查询</h5>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#查询last_name中包含字符'a'且包含字符'e'的员工信息
+# %:代表不确定个数的字符
+SELECT last_name
+FROM employees
+WHERE last_name LIKE '%a%' AND last_name LIKE '%e%';
+
+SELECT last_name
+FROM employees
+WHERE last_name LIKE '%a%e%' OR last_name LIKE '%e%a%';
+
+#查询第2个字符是'_'且第3个是'a'的员工信息
+# _:代表一个不确定的字符
+# 转义字符:\
+SELECT last_name
+FROM employees
+WHERE last_name LIKE '_\_a%';<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="regexp">2.2.6 REGEXP</h5>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220105020877.png" alt="image-20221220105020877">
+<figcaption aria-hidden="true">image-20221220105020877</figcaption>
+</figure>
+<h3 id="逻辑运算符">3 逻辑运算符</h3>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220105302086.png" alt="image-20221220105302086">
+<figcaption aria-hidden="true">image-20221220105302086</figcaption>
+</figure>
+<p>OR可以和AND一起使用，但是在使用时要注意两者的优先级，由于AND的优先级高于OR，因此先对AND两边的操作数进行操作，再与OR中的操作数结合。</p>
+<h3 id="位运算符">4 位运算符</h3>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220105824731.png" alt="image-20221220105824731">
+<figcaption aria-hidden="true">image-20221220105824731</figcaption>
+</figure>
+<h3 id="运算符的优先级">5 运算符的优先级</h3>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220105800448.png" alt="image-20221220105800448">
+<figcaption aria-hidden="true">image-20221220105800448</figcaption>
+</figure>
+<h2 id="第4章-排序与分页">第4章 排序与分页</h2>
+<h3 id="排序">1 排序</h3>
+<p>使用<code>ORDER BY</code>对查询的数据进行排序操作。</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#升序:ASC(默认)
+#降序:DESC
+SELECT employee_id,last_name,salary
+FROM employees
+ORDER BY salary DESC;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>注：</p>
+<p>①
+如果没有使用排序操作，默认情况下查询返回的数据是按照添加数据的顺序显示的</p>
+<p>②
+列的别名只能在<code>ORDER BY</code>中使用，不能在<code>WHERE</code>中使用</p>
+<p>③
+<code>WHERE</code>需要声明在<code>FROM</code>后，<code>ORDER BY</code>之前</p>
+<h4 id="二级排序">1.1 二级排序</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#显示员工信息,按照department_id的降序排序,salary的升序排序
+SELECT employee_id,last_name,salary,department_id
+FROM employees
+ORDER BY department_id DESC,salary;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="分页">2 分页</h3>
+<h4 id="mysql使用limit实现数据的分页显示">2.1
+MYSQL使用LIMIT实现数据的分页显示</h4>
+<p>LIMIT格式：<code>LIMIT 位置偏移量,条目数</code></p>
+<p>结构<code>LIMIT 0,条目数</code>等价于<code>LIMIT 条目数</code></p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#每页显示pageSize条记录,此时显示第pageNo页
+SELECT employee_id,last_name,salary,department_id
+FROM employees
+LIMIT (pageNo-1) * pageSize,pageSize;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="where...order-by...limit声明顺序">2.2 WHERE...ORDER
+BY...LIMIT声明顺序</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT employee_id,last_name,salary,department_id
+FROM employees
+WHERE salary &gt; 6000
+ORDER BY salary DESC
+LIMIT 0,10;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="mysql8.0新特性limit...offset...">2.3
+MYSQL8.0新特性：LIMIT...OFFSET...</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#只查询第32,33条数据
+SELECT employee_id,last_name,salary,department_id
+FROM employees
+LIMIT 31,2;
+
+SELECT employee_id,last_name,salary,department_id
+FROM employees
+LIMIT 2 OFFSET 31;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="第5章-多表查询">第5章 多表查询</h2>
+<p>1.如果查询语句中出现了多个表中都存在的字段，则必须指明此字段所在的表</p>
+<p>2.从sql优化的角度，建议多表查询时，每个字段前都指明其所在的表</p>
+<p>3.可以给表起别名，在SELECT和WHERE中使用表的别名</p>
+<p>4.如果给表起了别名，一旦在SELECT或WHERE中使用表名的话，则必须使用表的别名，而不能再使用表的原名。</p>
+<p>5.如果有n个表实现多表的查询，则需要至少n-1个连接条件</p>
+<h3 id="多表查询的分类">1 多表查询的分类</h3>
+<h4 id="等值连接-vs-非等值连接">1.1 等值连接 vs 非等值连接</h4>
+<h5 id="非等值连接">1.1.1 非等值连接</h5>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT e.last_name,e.salary,j.grade_level
+FROM employees e,job_grades j
+WHERE e.salary BETWEEN j.lowest_sal AND j.highest_sal<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h4 id="自连接-vs-非自连接">1.2 自连接 vs 非自连接</h4>
+<h5 id="自连接">1.2.1 自连接</h5>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#查询员工id,员工姓名及其管理者的id和姓名
+SELECT e1.employee_id,e1.last_name,e1.manager_id,e2.last_name
+FROM employees e1,employees e2
+WHERE e1.manager_id = e2.employee_id;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="内连接-vs-外连接">1.3 内连接 vs 外连接</h4>
+<h5 id="内连接">1.3.1 内连接</h5>
+<p>内连接：合并具有同一列的两个以上的表的行，结果集中不包含一个表与另一个表不匹配的行</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT employee_id,department_name
+FROM employees e,departments d
+WHERE e.department_id = d.department_id;
+
+#SQL99:(INNER可以省略)
+SELECT e.employee_id,d.department_name,l.city
+FROM employees e INNER JOIN departments d
+ON e.department_id = d.department_id
+JOIN location l
+ON d.location_id = l.location_id;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="外连接">1.3.2 外连接</h5>
+<p>外连接：合并具有同一列的两个以上的表的行，结果集中除了包含一个表与另一个表匹配的行之外，还查询到了左表或右表中不匹配的行。</p>
+<p>外连接的分类：左外连接、右外连接、满外连接</p>
+<p>左（右）外连接：两个表在连接过程中除了返回满足连接条件的行以外还返回左（右）表中不满足条件的行，这种连接称为左（右）外连接</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#查询所有的员工的last_name,department_name信息
+
+#SQL92:使用 + (MYSQL不支持SQL92语法中外连接的写法)
+SELECT e.employee_id,d.department_id
+FROM employees e,departments d #需要使用左连接
+WHERE e.department_id = d.department_id(+);
+
+#SQL99:JOIN...ON(MySQL支持)(OUTER可以省略)
+#左外连接:
+SELECT e.employee_id,d.department_id
+FROM employees e LEFT OUTER JOIN departments d
+ON e.department_id = d.department_id;
+
+#右外连接:
+SELECT e.employee_id,d.department_id
+FROM employees e RIGHT JOIN departments d
+ON e.department_id = d.department_id;
+
+#满外连接:(MySQL不支持FULL OUTER JOIN)
+SELECT e.employee_id,d.department_id
+FROM employees e FULL JOIN departments d
+ON e.department_id = d.department_id;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="union的使用">2 UNION的使用</h3>
+<h5 id="合并查询结果">合并查询结果</h5>
+<p>利用UNION关键字，可以给出多条SELECT语句，并将它们的结果组合成单个结果集。合并时，两个表对应的列数和数据类型必须相同，并且相互对应。各个SELECT语句之间使用UNION或UNION
+ALL关键字分隔。</p>
+<p>语法格式：</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT column,... FROM table1
+UNION [ALL]
+SELECT column,... FROM table2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h5 id="union操作符">UNION操作符</h5>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220162812696.png" alt="image-20221220162812696">
+<figcaption aria-hidden="true">image-20221220162812696</figcaption>
+</figure>
+<p>UNION 操作符返回两个查询的结果集的并集，去除重复记录</p>
+<h5 id="union-all操作符">UNION ALL操作符</h5>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220163121439.png" alt="image-20221220163121439">
+<figcaption aria-hidden="true">image-20221220163121439</figcaption>
+</figure>
+<p>UNION
+ALL操作符返回两个查询的结果集的并集。对于两个结果集的重复部分不去重。</p>
+<h3 id="种sql-joins的实现">3 7种SQL JOINS的实现</h3>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220162416061.png" alt="image-20221220162416061">
+<figcaption aria-hidden="true">image-20221220162416061</figcaption>
+</figure>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#中图:内连接
+SELECT employee_id,department_name
+FROM employees e JOIN departments d
+ON e.department_id = d.department_id;
+
+#左上图:左外连接
+SELECT employee_id,department_name
+FROM employees e LEFT JOIN departments d
+ON e.department_id = d.department_id;
+
+#右上图:右外连接
+SELECT employee_id,department_name
+FROM employees e RIGHT JOIN departments d
+ON e.department_id = d.department_id;
+
+#左中图:
+SELECT employee_id,department_name
+FROM employees e LEFT JOIN departments d
+ON e.department_id = d.department_id
+WHERE d.department_id IS NULL;
+
+#右中图
+SELECT employee_id,department_name
+FROM employees e RIGHT JOIN departments d
+ON e.department_id = d.department_id
+WHERE e.department_id IS NULL;
+
+#左下图:满外连接
+#方式1: 左上图 UNION ALL 右中图
+SELECT employee_id,department_name
+FROM employees e LEFT JOIN departments d
+ON e.department_id = d.department_id
+UNION ALL
+SELECT employee_id,department_name
+FROM employees e RIGHT JOIN departments d
+ON e.department_id = d.department_id
+WHERE e.department_id IS NULL;
+
+#右下图:左中图 UNION ALL 右中图
+SELECT employee_id,department_name
+FROM employees e LEFT JOIN departments d
+ON e.department_id = d.department_id
+WHERE d.department_id IS NULL
+UNION ALL
+SELECT employee_id,department_name
+FROM employees e RIGHT JOIN departments d
+ON e.department_id = d.department_id
+WHERE e.department_id IS NULL;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="sql99语法新特性">4 SQL99语法新特性</h3>
+<h4 id="自然连接">4.1 自然连接</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT employee_id,last_name,department_name
+FROM employees e JOIN departments d
+ON e.department_id = d.department_id
+AND e.manager_id = d.manager_id;
+
+#SQL99:NATURAL JOIN:它会帮你自动查询两张连接表中'所有相同的字段'，然后进行'等值连接'。
+SELECT employee_id,last_name,department_name
+FROM employees e NATURAL JOIN departments d;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="using">4.2 USING</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT employee_id,last_name,department_name
+FROM employees e JOIN departments d
+ON e.department_id = d.department_id
+
+#SQL99:
+SELECT employee_id,last_name,department_name
+FROM employees e JOIN departments d
+USING (department_id);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="第6章-单行函数">第6章 单行函数</h2>
+<h3 id="函数的理解">1 函数的理解</h3>
+<h4 id="mysql的内置函数及分类">1.1 MySQL的内置函数及分类</h4>
+<p>MySQL提供的内置函数从<strong>实现的功能角度</strong>可以分为：数值函数、字符串函数、日期和时间函数、流程控制函数、加密与解密函数、获取MySQL信息函数、聚合函数等。</p>
+<p>将这些丰富的内置函数再分为两类：单行函数、聚合函数（或分组函数）。</p>
+<h3 id="数值函数">2 数值函数</h3>
+<h4 id="基本函数">2.1 基本函数</h4>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220170213285.png" alt="image-20221220170213285">
+<figcaption aria-hidden="true">image-20221220170213285</figcaption>
+</figure>
+<h4 id="角度与弧度互换函数">2.2 角度与弧度互换函数</h4>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220171335008.png" alt="image-20221220171335008">
+<figcaption aria-hidden="true">image-20221220171335008</figcaption>
+</figure>
+<h4 id="三角函数">2.3 三角函数</h4>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220171156829.png" alt="image-20221220171156829">
+<figcaption aria-hidden="true">image-20221220171156829</figcaption>
+</figure>
+<h4 id="指数与对数">2.4 指数与对数</h4>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220171540420.png" alt="image-20221220171540420">
+<figcaption aria-hidden="true">image-20221220171540420</figcaption>
+</figure>
+<h3 id="字符串函数">3 字符串函数</h3>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220171736256.png" alt="image-20221220171736256">
+<figcaption aria-hidden="true">image-20221220171736256</figcaption>
+</figure>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220171906352.png" alt="image-20221220171906352">
+<figcaption aria-hidden="true">image-20221220171906352</figcaption>
+</figure>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220172049099.png" alt="image-20221220172049099">
+<figcaption aria-hidden="true">image-20221220172049099</figcaption>
+</figure>
+<h3 id="日期和时间函数">4 日期和时间函数</h3>
+<h4 id="获取日期时间">4.1 获取日期、时间</h4>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220172215832.png" alt="image-20221220172215832">
+<figcaption aria-hidden="true">image-20221220172215832</figcaption>
+</figure>
+<h4 id="日期与时间戳的转换">4.2 日期与时间戳的转换</h4>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220172238916.png" alt="image-20221220172238916">
+<figcaption aria-hidden="true">image-20221220172238916</figcaption>
+</figure>
+<h4 id="获取月份星期星期数天数等函数">4.3
+获取月份、星期、星期数、天数等函数</h4>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220174029933.png" alt="image-20221220174029933">
+<figcaption aria-hidden="true">image-20221220174029933</figcaption>
+</figure>
+<h4 id="日期的操作函数">4.4 日期的操作函数</h4>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220172629343.png" alt="image-20221220172629343">
+<figcaption aria-hidden="true">image-20221220172629343</figcaption>
+</figure>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220174133855.png" alt="image-20221220174133855">
+<figcaption aria-hidden="true">image-20221220174133855</figcaption>
+</figure>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220174159235.png" alt="image-20221220174159235">
+<figcaption aria-hidden="true">image-20221220174159235</figcaption>
+</figure>
+<h4 id="时间和秒钟转换的函数">4.5 时间和秒钟转换的函数</h4>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220172847982.png" alt="image-20221220172847982">
+<figcaption aria-hidden="true">image-20221220172847982</figcaption>
+</figure>
+<h4 id="计算日期和时间的函数">4.6 计算日期和时间的函数</h4>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220173011677.png" alt="image-20221220173011677">
+<figcaption aria-hidden="true">image-20221220173011677</figcaption>
+</figure>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220174412244.png" alt="image-20221220174412244">
+<figcaption aria-hidden="true">image-20221220174412244</figcaption>
+</figure>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220173046332.png" alt="image-20221220173046332">
+<figcaption aria-hidden="true">image-20221220173046332</figcaption>
+</figure>
+<h4 id="日期的格式化与解析">4.7 日期的格式化与解析</h4>
+<pre class="line-numbers language-none"><code class="language-none">格式化:日期 ---&gt; 字符串
+解析:字符串 ---&gt; 日期<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220173259762.png" alt="image-20221220173259762">
+<figcaption aria-hidden="true">image-20221220173259762</figcaption>
+</figure>
+<p>上述非GET_FORMAT函数中fmt参数常用的格式符：</p>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220175055666.png" alt="image-20221220175055666">
+<figcaption aria-hidden="true">image-20221220175055666</figcaption>
+</figure>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220175247330.png" alt="image-20221220175247330">
+<figcaption aria-hidden="true">image-20221220175247330</figcaption>
+</figure>
+<p>GET_FORMAT函数中date_type和format_type参数取值如下：</p>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220175747147.png" alt="image-20221220175747147">
+<figcaption aria-hidden="true">image-20221220175747147</figcaption>
+</figure>
+<h3 id="流程控制函数">5 流程控制函数</h3>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220202855666.png" alt="image-20221220202855666">
+<figcaption aria-hidden="true">image-20221220202855666</figcaption>
+</figure>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#IF(VALUE,VALUE1,VALUE2)
+SELECT last_name,salary, IF(salary&gt;=6000,'高工资','低工资')
+FROM employees;
+
+SELECT last_name,commission_pct, IF(commission_pct IS NOT NULL,commission_pct,0) 
+FROM employees;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#IFNULL(VALUE1,VALUE2):看做是IF(VALUE,VALUE1,VALUE2)的特殊情况
+SELECT last_name,commission_pct, IFNULL(commission_pct,0) "details"
+FROM employees;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#CASE WHEN ... THEN ... WHEN ... THEN ... ELSE ... END
+SELECT last_name,salary, CASE 
+	WHEN salary &gt;= 15000 THEN 'SALARY_A'
+	WHEN salary &gt;= 10000 THEN 'SALARY_B'
+	WHEN salary &gt;= 8000 THEN 'SALARY_C'
+	ELSE 'SALARY_D' END "details"
+FROM employees;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="加密与解密函数">6 加密与解密函数</h3>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220233254619.png" alt="image-20221220233254619">
+<figcaption aria-hidden="true">image-20221220233254619</figcaption>
+</figure>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#PASSWORD() \ ENCODE() \ DECODE() 在MySQL8.0中弃用<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="mysql信息函数">7 MySQL信息函数</h3>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220234204925.png" alt="image-20221220234204925">
+<figcaption aria-hidden="true">image-20221220234204925</figcaption>
+</figure>
+<h3 id="其他函数">8 其他函数</h3>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221220234357704.png" alt="image-20221220234357704">
+<figcaption aria-hidden="true">image-20221220234357704</figcaption>
+</figure>
+<h2 id="第7章-聚合函数">第7章 聚合函数</h2>
+<h3 id="常见的聚合函数">1 常见的聚合函数</h3>
+<h4 id="avg-sum">1.1 AVG / SUM</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#只适用于数值类型的字段(或变量)
+SELECT AVG(salary),SUM(salary)
+FROM employees;
+#AVG = SUM / COUNT<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="max-min">1.2 MAX / MIN</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#适用于数值类型、字符串类型、日期时间类型的字段(或变量)
+SELECT MAX(salary),MIN(salary)
+FROM employees;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h4 id="count">1.3 COUNT</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql"># 作用:计算指定字段在查询结构中出现的个数(不包含NULL)
+SELECT COUNT(employee_id)
+FROM employees;
+#如果计算表中有多少条记录,如何实现?
+#方式1:COUNT(*)
+#方式2:COUNT(*)
+#方式3:COUNT(具体字段):不含NULL
+
+#COUNT(*)、COUNT(1)、COUNT(具体字段)哪个效率更高?
+#如果使用的是 MyISAM 存储引擎,则三者效率相同,都是O(1)
+#如果使用的是 InnoDB 存储引擎,三者效率 COUNT(*) = COUNT(1) &gt; COUNT(具体字段)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="group-by">2 GROUP BY</h3>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#查询各个department_id,job_id的平均工资
+#方式1:
+SELECT department_id,job_id,AVG(salary)
+FROM employees
+GROUP BY department_id,job_id;
+#方式2:
+SELECT job_id,department_id,AVG(salary)
+FROM employees
+GROUP BY job_id,department_id;
+
+#结论1:SELECT中出现的非组函数的字段必须上明在GROUP BY中。反之,GROUP BY中生命的字段可以不出现在SELECT中。
+#结论2:GROUP BY声明在FROM后面,WHERE后面,ORDER BY前面,LIMIT前面
+#结论3:MySQL中GROUP BY使用WITH ROLLUP
+SELECT department_id,AVG(salary)
+FROM employees
+GROUP BY department_id WITH ROLLUP;
+#说明:当使用ROLLUP时,不能同时使用ORDER BY子句进行结果排序,即ROLLUP和ORDER BY是互相排斥的。
+#查询各个部门的平均工资,按照平均工资升序排列
+SELECT department_id,AVG(salary) avg_sal
+FROM employees
+GROUP BY department_id
+ORDER BY avg_sal ASC;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="having">3 HAVING</h3>
+<p>作用：过滤数据</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#查询部门id为10,20,30,40的部门中最高工资比10000高的部门信息
+
+#方式1:推荐,执行效率高于方式2
+SELECT department_id,MAX(salary)
+FROM employees
+WHERE department_id IN (10,20,30,40)
+GROUP BY department_id
+HAVING MAX(salary)&gt;10000;
+#方式2:
+SELECT department_id,MAX(salary)
+FROM employees
+GROUP BY department_id
+HAVING MAX(salary)&gt;10000 AND department_id IN (10,20,30,40);
+
+#要求1:如果过滤条件中使用了聚合函数,则必须使用HAVING替换WHERE
+#要求2:HAVING必须声明在GROUP BY后面
+#要求3:开发中,使用HAVING的前提是使用了GROUP BY
+
+#结论:当过滤条件中没有聚合函数时,则此过滤条件声明在WHERE中或HAVING中都可以(建议声明在WHERE中)
+
+/*
+WHERE和HAVING的对比
+1.从适用范围上来讲,HAVING的适用范围更广
+2.如果过滤条件中没有聚合函数:这种情况下,WHERE的执行效率要高于HAVING<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="sql底层执行原理">4 SQL底层执行原理</h3>
+<h4 id="select语句的完整结构">4.1 SELECT语句的完整结构</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#sql92语法:
+SELECT ...,...,...(存在聚合函数)
+FROM ...,...,...
+WHERE 多表的连接条件 AND 不包含聚合函数的过滤条件
+GROUP BY ...,...
+HAVING 包含聚合函数的过滤条件
+ORDER BY ...,...(ASC/DESC)
+LIMIT ...,...
+
+#sql99语法:
+SELECT ...,...,...(存在聚合函数)
+FROM ... (LEFT/RIGHT) JOIN ... ON 多表的连接条件
+(LEFT/RIGHT) JOIN ... ON ...
+WHERE 多表的连接条件 AND 不包含聚合函数的过滤条件
+GROUP BY ...,...
+HAVING 包含聚合函数的过滤条件
+ORDER BY ...,...(ASC/DESC)
+LIMIT ...,...<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="sql语句的执行过程">4.2 SQL语句的执行过程</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">FROM ...,... -&gt; ON -&gt; (LEFT/RIGHT JOIN) -&gt; WHERE -&gt; GROUP BY -&gt; HAVING -&gt; SELECT -&gt; DISTINCT -&gt; ORDER BY -&gt; LIMIT<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="第8章-子查询">第8章 子查询</h2>
+<h3 id="子查询的基本使用">1 子查询的基本使用</h3>
+<ul>
+<li><p>外查询（或主查询）、内查询（或子查询）</p></li>
+<li><p>子查询（内查询）在主查询之前一次执行完成</p></li>
+<li><p>子查询的结果被主询 （外查询）使用</p>
+<p>注意事项：</p></li>
+<li><p>子查询要包含在括号内</p></li>
+<li><p>将子查询放在比较条件的右侧</p></li>
+<li><p>单行操作符对应单行子查询，多行操作符对应多行子查询</p></li>
+</ul>
+<h3 id="子查询的分类">2 子查询的分类</h3>
+<h4 id="角度1从内查询返回的结构的条目数">角度1：从内查询返回的结构的条目数</h4>
+<p>单行子查询、多行子查询</p>
+<h4 id="角度2从内查询是否被执行多次">角度2：从内查询是否被执行多次</h4>
+<p>相关子查询、不相关子查询</p>
+<p>例如：</p>
+<p>相关子查询：查询工资大于本部门平均工资的员工信息</p>
+<p>不相关子查询：查询工资大于本公司平均工资的员工信息</p>
+<h3 id="单行子查询">3 单行子查询</h3>
+<h4 id="单行操作符">3.1 单行操作符</h4>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221228211950247.png" alt="image-20221228211950247">
+<figcaption aria-hidden="true">image-20221228211950247</figcaption>
+</figure>
+<h4 id="子查询中的空值问题">3.2 子查询中的空值问题</h4>
+<h4 id="非法使用子查询">3.3 非法使用子查询</h4>
+<h3 id="多行子查询">4 多行子查询</h3>
+<h4 id="多行比较操作符">4.1 多行比较操作符</h4>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221228223004414.png" alt="image-20221228223004414">
+<figcaption aria-hidden="true">image-20221228223004414</figcaption>
+</figure>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#查询平均工资最低的部门id
+#MYSQL中聚合函数是不能嵌套使用的
+#方式1:
+SELECT department_id
+FROM employees
+GROUP BY department_id
+HAVING AVG(salary) = (
+                        SELECT MIN(avg_sal)
+                        FROM (
+                        SELECT AVG(salary) avg_sal
+                        FROM employees
+                        GROUP BY department_id
+                        ) t_dept_avg_sal
+					);
+					
+#方式2:
+SELECT department_id
+FROM employees
+GROUP BY department_id
+HAVING AVG(salary) &lt;= ALL(
+                        SELECT AVG(salary) avg_sal
+                        FROM employees
+                        GROUP BY department_id
+                        )
+					);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="空值问题">4.2 空值问题</h4>
+<h3 id="相关子查询">5 相关子查询</h3>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#查询员工中工资大于本部门平均工资的员工的last_name,salary,department_id
+#方式1:使用相关子查询
+SELECT last_name,salary,department_id
+FROM employees e1
+WHERE salary &gt; (
+				SELECT AVG(salary)
+				FROM employees e2
+				WHERE department_id = e1.department_id
+);
+#方式2:在FROM中声明子查询
+SELECT e.last_name,e.salary,e.department_id
+FROM employees e,(
+					SELECT department_id,AVG(salary) avg_sal
+					FROM employees
+					GROUP BY department_id
+				) t_dept_avg_sal
+WHERE e.salary &gt; t_dept_avg_sal.avg_sal
+AND e.department_id = t_dept_avg_sal.department_id;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>结论：在SELECT中，出了<code>GROUP BY</code>和<code>LIMIT</code>之外，其他位置都可以声明子查询</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT ...,...,...(存在聚合函数)
+FROM ... (LEFT/RIGHT) JOIN ... ON 多表的连接条件
+(LEFT/RIGHT) JOIN ... ON ...
+WHERE 多表的连接条件 AND 不包含聚合函数的过滤条件
+GROUP BY ...,...
+HAVING 包含聚合函数的过滤条件
+ORDER BY ...,...(ASC/DESC)
+LIMIT ...,...<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="exists-与-not-exists-关键字">5.1 EXISTS 与 NOT EXISTS
+关键字</h4>
+<p>如果在子查询中不存在满足条件的行： 条件返回 FALSE
+继续在子查询中查找</p>
+<p>如果在子查询中存在满足条件的行： 不在子查询中继续查找 条件返回
+TRUE</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#查询公司管理者的employee_id,last_name,job_id,department_id
+#方式1:自连接
+SELECT DISTINCT e2.employee_id,e2.last_name,e2.job_id,e2.department_id
+FROM employees e1 JOIN employees e2
+ON e1.manager_id = e2.employee_id;
+
+#方式2:子查询
+SELECT employee_id,last_name,job_id,department_id
+FROM employees
+WHERE employee_id IN (
+						SELECT DISTINCT manager_id
+						FROM employees
+						);
+											
+#方式3:使用EXISTS
+SELECT employee_id,last_name,job_id,department_id
+FROM employees e1
+WHERE EXISTS (
+				SELECT *
+				FROM employees e2
+				WHERE e1.employee_id = e2.employee_id
+				);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#查询departments表中,不存在于employees表中的部门的department_id和department_name
+#方式1:
+SELECT d.department_id,d.department_name
+FROM employees e RIGHT JOIN departments d
+ON e.department_id = d.department_id
+WHERE e.department_id IS NULL;
+
+#方式2:
+SELECT department_id,department_name
+FROM departments d
+WHERE NOT EXISTS (
+                SELECT *
+                FROM employees e
+                WHERE e.department_id = d.department_id
+                );<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="第9章-创建和管理表">第9章 创建和管理表</h2>
+<h3 id="创建和管理数据库">1 创建和管理数据库</h3>
+<h4 id="创建数据库">1.1 创建数据库</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#方式1:
+CREATE DATABASE mytest1;
+#方式2:显式指明要创建的数据库的字符集
+CREATE DATABASE mytest2 CHARACTER SET 'gbk';
+#方式3:
+CREATE DATABASE IF NOT EXISTS mytest3 CHARACTER SET 'utf8';<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="管理数据库">1.2 管理数据库</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#查看创建数据库的结构
+SHOW CREATE DATABASE mytest1;
+#查看当前连接中的数据库都有哪些
+SHOW DATABASES;
+#切换数据库
+USE mytest2;
+#查看当前数据库中保存的数据表
+SHOW TABLES;
+#查看当前使用的数据库
+SELECT DATABASE() FROM DUAL;
+#查看指定数据库下保存的数据表
+SHOW TABLES FROM mytest3;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="修改数据库">1.3 修改数据库</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#修改数据库的字符集
+ALTER DATABASE mytest2 CHARACTER SET 'utf8';<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h4 id="删除数据库">1.4 删除数据库</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#方式1:
+DROP DATABASE mytest1;
+#方式2:
+DROP DATABASE IF EXISTS mytest2;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="mysql中的数据类型">1.5 MySQL中的数据类型</h4>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20221231161352844.png" alt="image-20221231161352844">
+<figcaption aria-hidden="true">image-20221231161352844</figcaption>
+</figure>
+<h3 id="如何创建数据表">2 如何创建数据表</h3>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#方式1:需要用户具备创建表的权限
+CREATE TABLE IF NOT EXISTS myemp1(
+id INT,
+emp_name VARCHAR(15), #使用VARCHAR来定义字符串,必须在使用VARCHAR时指明其长度
+hire_date DATE
+);
+#查看表结构
+DESC myemp1;
+#查看创建表的语句结构
+SHOW CREATE TABLE myemp1; #如果在创建表时没有指明使用的字符集,则默认使用表所在数据库的字符集
+#查看表的数据
+SELECT * FROM myemp1;
+
+#方式2:基于现有的表
+#说明1:查询语句中字段的别名,可以作为新创建的表的字段的名称。
+#说明2:此时的查询语句可以结构比较丰富,使用前面章节讲过的各种SELECT
+CREATE TABLE myemp2
+AS
+SELECT employee_id,last_name,salary
+FROM employees;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="修改表">3 修改表</h3>
+<h4 id="添加一个字段">3.1 添加一个字段</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#默认添加到表中的最后一个字段的位置
+ALTER TABLE myemp1
+ADD salary DOUBLE(10,2);
+
+ALTER TABLE myemp1
+ADD phone_number VARCHAR(20) FIRST;
+
+ALTER TABLE myemp1
+ADD email VARCHAR(45) AFTER emp_name;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="修改一个字段数据类型长度默认值略">3.2
+修改一个字段：数据类型、长度、默认值（略）</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">ALTER TABLE myemp1
+MODIFY emp_name VARCHAR(25);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h4 id="重命名一个字段">3.3 重命名一个字段</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">ALTER TABLE myemp1
+CHANGE salary monthly_salary DOUBLE(10,2);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h4 id="删除一个字段">3.4 删除一个字段</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">ALTER TABLE myemp1
+DROP COLUMN my_email;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="重命名表">4 重命名表</h3>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#方式1:
+RENAME TABLE myemp1
+TO myemp2;
+
+#方式2:
+ALTER TABLE myemp1
+RENAME TO myemp2;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="删除表">5 删除表</h3>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#将表结构删除,同时将表中的数据也删除,释放表空间
+DROP TABLE IF EXISTS myemp2;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="清空表">6 清空表</h3>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#清空表,表示清空表中的所有数据,但是表结构保留。
+TRUNCATE TABLE myemp2;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="dcl中的-commit-和-rollback">7 DCL中的 COMMIT 和 ROLLBACK</h3>
+<p>COMMIT：提交数据。一旦执行COMMIT，则数据就永久的保存在数据库中，意味着数据不可以回滚。</p>
+<p>ROLLBACK：回滚数据。一旦执行ROLLBACK，则可以实现数据的回滚。回滚到最近的一次COMMIT之后。</p>
+<h3 id="对比-truncate-table-和-delete-from">8 对比 TRUNCATE TABLE 和
+DELETE FROM</h3>
+<p>相同点：都可以实现对表中所有数据的删除，同时保留表结构。</p>
+<p>不同点：</p>
+<p>​
+<code>TRUNCATE TABLE</code>：一旦执行此操作，表数据全部清除。同时，数据是不可以回滚的。</p>
+<p>​
+<code>DELETE FROM</code>：一旦执行此操作，表数据可以全部清除（不带WHERE）。同时，数据是可以实现回滚的。</p>
+<h3 id="ddl-和-dml-的说明">9 DDL 和 DML 的说明</h3>
+<p>1.DDL的操作一旦执行，就不可回滚。指令<code>SET autocommit = FALSE</code>对DDL操作无效。（因为在执行完DDL操作之后，一定会执行一次COMMIT。而此COMMIT操作不受<code>SET autocommit = FALSE</code>影响。）</p>
+<p>2.DML的操作在默认情况夏一旦执行，也是不可回滚的。但是，如果在DML之前，执行了<code>SET autocommit = FALSE</code>，则执行的DML操作就可以实现回滚。</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#DML:DELETE FROM
+# 1.
+COMMIT;
+# 2.有效，使DML可以实现回滚
+SET autocommit = FALSE;
+# 3.
+DELETE FROM myemp;
+# 4.
+SELECT *
+FROM myemp;
+# 5.
+ROLLBACK;
+# 6.有数据
+SELECT *
+FROM myemp;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#DDL:TRUNCATE TABLE
+# 1.
+COMMIT;
+# 2.无效
+SET autocommit = FALSE;
+# 3.
+TRUNCATE TABLE myemp;
+# 4.
+SELECT *
+FROM myemp;
+# 5.
+ROLLBACK;
+# 6.无数据
+SELECT *
+FROM myemp;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="mysql8.0新特性ddl的原子化">10 MySQL8.0新特性：DDL的原子化</h3>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">CREATE DATABASE mytest;
+USE mytest;
+CREATE TABLE book1(
+book_id INT ,
+book_name VARCHAR(255)
+);
+SHOW TABLES;
+#8.0中book1不会被删除(被回滚)
+DROP TABLE book1,book2;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="第10章-数据处理之增删改">第10章 数据处理之增、删、改</h2>
+<h3 id="插入数据">1 插入数据</h3>
+<h4 id="方式一一条一条添加">1.1 方式一：一条一条添加</h4>
+<h5 id="没有指明添加的字段">① 没有指明添加的字段</h5>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#注意:按照声明字段的先后顺序添加
+INSERT INTO emp1
+VALUES (1,'Tom','1999-01-15',3400);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h5 id="指明要添加的字段">② 指明要添加的字段</h5>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">INSERT INTO emp1(id,`name`,hire_date,salary)
+VALUES (1,'Tom','1999-01-15',3400);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h5 id="同时插入多条记录">③ 同时插入多条记录</h5>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">INSERT INTO emp1(id,`name`,hire_date,salary)
+VALUES
+(1,'Tom','1999-01-15',3400),
+(2,'Jerry','1998-11-28',4500),;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="方式二将查询结果插入到表中">1.2
+方式二：将查询结果插入到表中</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT * FROM emp1;
+INSERT INTO emp1(id,`name`,hire_date,salary)
+#查询语句
+SELECT employee_id,last_name,salary,hire_date #查询的字段要与添加到的表的字段一一对应
+FROM employees
+WHERE department_id IN (70,60);
+#说明:emp1表中要添加数据的字段的长度不能低于employees表中查询的字段的长度。若低于,则有添加不成功的风险。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="更新数据或修改数据">2 更新数据（或修改数据）</h3>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#可以实现批量修改数据
+UPDATE emp1
+SET hire_date = CURDATE()
+WHERE id = 5;
+
+#同时修改一条数据的多个字段
+UPDATE emp1
+SET hire_date = CURDATE(),salary = 6000
+WHERE id = 4;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="删除数据">3 删除数据</h3>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">DELETE FROM emp1
+WHERE id = 1;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>小结：DML操作默认情况下，执行完以后都会自动提交数据。如果希望执行完以后不自动提交数据，则需要使用<code>SET autocommit = FALSE</code></p>
+<h3 id="mysql8特性计算列">MySQL8特性：计算列</h3>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">CREATE TABLE test1(
+a INT,
+b INT,
+c INT GENERATED ALWAYS AS (a + b) VIRTUAL #字段c即为计算列
+);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="第11章-数据类型">第11章 数据类型</h2>
+<h3 id="mysql中的数据类型-1">1 MySQL中的数据类型</h3>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20230131111729456.png" alt="image-20230131111729456">
+<figcaption aria-hidden="true">image-20230131111729456</figcaption>
+</figure>
+<p>常见数据类型的属性：</p>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20230131112458180.png" alt="image-20230131112458180">
+<figcaption aria-hidden="true">image-20230131112458180</figcaption>
+</figure>
+<h3 id="整数类型">2 整数类型</h3>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20230131112529556.png" alt="image-20230131112529556">
+<figcaption aria-hidden="true">image-20230131112529556</figcaption>
+</figure>
+<p>注意：</p>
+<p>1.可以设置显示宽度，当INSERT的值小于设置的显示宽度时，使用0填充。</p>
+<p>2.当使用ZEROFILL时，会自动添加UNSIGNED</p>
+<h3 id="浮点类型">3 浮点类型</h3>
+<h3 id="定点类型">4 定点类型</h3>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20230203101514163.png" alt="image-20230203101514163">
+<figcaption aria-hidden="true">image-20230203101514163</figcaption>
+</figure>
+<p><code>DECIMAL(M,D)</code>：M为精度，D为标度。最大取值范围与DOUBLE相同。默认值为<code>DECIMAL(10,0)</code>.</p>
+<h3 id="位类型bit">5 位类型：BIT</h3>
+<h3 id="日期与时间类型">6 日期与时间类型</h3>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20230203105232831.png" alt="image-20230203105232831">
+<figcaption aria-hidden="true">image-20230203105232831</figcaption>
+</figure>
+<h3 id="文本类型">7 文本类型</h3>
+<p><code>CHAR(M)</code>类型</p>
+<p><code>VARCHAR(M)</code>类型：必须指定长度M。</p>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20230203112147055.png" alt="image-20230203112147055">
+<figcaption aria-hidden="true">image-20230203112147055</figcaption>
+</figure>
+<p><code>TEXT</code>类型</p>
+<h3 id="enum类型">8 ENUM类型</h3>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">CREATE TABLE test_enum(
+season ENUM('SPRING','SUMMER','AUTUMN','WINTER')
+);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h3 id="set类型">9 SET类型</h3>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">CREATE TABLE test_set(
+s SET('A','B','C')
+);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h3 id="二进制字符串类型">10 二进制字符串类型</h3>
+<h4 id="binary类型">BINARY类型</h4>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20230203114712943.png" alt="image-20230203114712943">
+<figcaption aria-hidden="true">image-20230203114712943</figcaption>
+</figure>
+<h4 id="blob类型">BLOB类型</h4>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20230203114650655.png" alt="image-20230203114650655">
+<figcaption aria-hidden="true">image-20230203114650655</figcaption>
+</figure>
+<h3 id="json类型">11 JSON类型</h3>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">CREATE TABLE test_json(
+js json
+);
+
+INSERT INTO test_json(js)
+VALUES ('{"name":"Tom","age":18,"address":{"province":"BeiJing","city":"BeiJing"}}');
+
+SELECT js -&gt; '$.name' AS NAME,js -&gt; '$.age' AS age,js -&gt; '$.address.province' AS province,js -&gt; '$.address.city' AS CITY
+FROM test_json;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="空间类型">12 空间类型</h3>
+<figure>
+<img src="C:\Users\RicardoHao\AppData\Roaming\Typora\typora-user-images\image-20230203115922938.png" alt="image-20230203115922938">
+<figcaption aria-hidden="true">image-20230203115922938</figcaption>
+</figure>
+<h2 id="第12章-约束">第12章 约束</h2>
+<h3 id="约束constraint概述">1 约束（constraint）概述</h3>
+<h4 id="为什么需要约束">1.1 为什么需要约束？</h4>
+<p>为了保证数据的完整性</p>
+<h4 id="什么叫约束">1.2 什么叫约束？</h4>
+<p>对表中字段的限制</p>
+<h4 id="约束的分类">1.3 约束的分类</h4>
+<h5 id="角度1约束的字段的个数">角度1：约束的字段的个数</h5>
+<p>单列约束 多列约束</p>
+<h5 id="角度2约束的作用范围">角度2：约束的作用范围</h5>
+<p>列级约束：将此约束声明在对应字段的后面</p>
+<p>表级约束：在表中所有字段都声明完，在所有字段的后面声明的约束</p>
+<h5 id="角度3约束的作用">角度3：约束的作用</h5>
+<p>not null（非空约束）</p>
+<p>unique（唯一性约束）</p>
+<p>primary key（主键约束）</p>
+<p>foreign key（外键约束）</p>
+<p>check（检查约束）</p>
+<p>default（默认值约束）</p>
+<h4 id="如何添加约束">1.4 如何添加约束</h4>
+<p><code>CREATE TABLE</code> 时添加约束</p>
+<p><code>ALTER TABLE</code> 时增加、删除约束</p>
+<h4 id="如何查看表中的约束">1.5 如何查看表中的约束</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT * FROM information_schema.table_constraints
+WHERE table_name = 'employees';<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="非空约束not-null">2 非空约束（not null）</h3>
+<h4 id="create-table-时添加约束">2.1 CREATE TABLE 时添加约束</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">CREATE TABLE test1(
+id INT NOT NULL,
+last_name VARCHAR(15) NOT NULL,
+email VARCHAR(25),
+salary DECIMAL(10,2)
+);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="alter-table-时添加约束">2.2 ALTER TABLE 时添加约束</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">ALTER TABLE test1
+MODIFY email VARCHAR(25) NOT NULL;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="唯一性约束unique">3 唯一性约束（unique）</h3>
+<h4 id="create-table-时添加约束-1">3.1 CREATE TABLE 时添加约束</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">CREATE TABLE test2(
+id INT UNIQUE, #列级约束
+last_name VARCHAR(15),
+email VARCHAR(25) UNIQUE,
+salary DECIMAL(10,2),
+    
+#表级约束
+CONSTRAINT uni_test2_email UNIQUE(email)
+);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>注：</p>
+<p>1.在创建唯一约束时，如果不给唯一约束命名，就默认和列名相同。</p>
+<p>2.可以向声明为unique的字段上添加null值。且可以多次添加null值。</p>
+<h4 id="alter-table-时添加约束-1">3.2 ALTER TABLE 时添加约束</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#方式1:
+ALTER TABLE test2
+ADD CONSTRAINT uni_test2_sal UNIQUE(salary);
+
+#方式2:
+ALTER TABLE test2
+MODIFY last_name VARCHAR(15) UNIQUE;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="复合的唯一性约束">3.3 复合的唯一性约束</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">CREATE TABLE USER(
+id INT,
+`name` VARCHAR(15),
+`password` VARCHAR(25),
+
+#表级约束
+CONSTRAINT uk_user_name_pwd UNIQUE(`name`,`password`)
+);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="删除唯一性约束">3.4 删除唯一性约束</h4>
+<p>添加唯一性约束的列上也会自动创建唯一索引。</p>
+<p>删除唯一约束只能通过删除唯一索引的方式删除。</p>
+<p>删除时需要指定唯一索引名，唯一索引名就和唯一约束名一样。</p>
+<p>如果创建唯一约束时未指定名称，如果是单列，就默认和列名相同；如果是组合列，那么默认和（）中排在第一个的列名相同。也可以自定义唯一性约束名。</p>
+<h3 id="主键约束primary-key">4 主键约束（primary key）</h3>
+<h4 id="create-table-时添加约束-2">4.1 CREATE TABLE 时添加约束</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">CREATE TABLE test3(
+id INT PRIMARY KEY, #列级约束
+last_name VARCHAR(15),
+email VARCHAR(25),
+salary DECIMAL(10,2),
+    
+#表级约束
+CONSTRAINT pk_test3_id PRIMARY KEY(id) #没有必要起名字
+);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>注：</p>
+<p>1.一个表中最多只能有一个主键约束。</p>
+<p>2.特征：非空且唯一。用于唯一的标识表中的一条记录。</p>
+<h4 id="alter-table-时添加约束-2">4.2 ALTER TABLE 时添加约束</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">ALTER TABLE test3
+ADD PRIMARY KEY (id);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h4 id="删除主键约束实际开发中不会删除主键约束">4.3
+删除主键约束(实际开发中，不会删除主键约束)</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">ALTER TABLE test3
+DROP PRIMARY KEY;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="自增列auto_increment">5 自增列：AUTO_INCREMENT</h3>
+<p>1.一个表最多只能有一个自增长列</p>
+<p>2.当需要产生唯一标识符或顺序值时，可设置自增长</p>
+<p>3.自增长列约束的列必须是键列（主键列，唯一键列）</p>
+<p>4.自增约束的列的数据类型必须是整数类型</p>
+<p>5.向主键(含AUTO_INCREMENT)
+的字段上添加0或null时，实际上会自动的往上添加指定的字段的数值</p>
+<h4 id="create-table-时添加auto_increment">5.1 CREATE TABLE
+时添加AUTO_INCREMENT</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">CREATE TABLE test4(
+id INT PRIMARY KEY AUTO_INCREMENT,
+last_name VARCHAR(15)
+);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="alter-table-时添加auto_increment">5.2 ALTER TABLE
+时添加AUTO_INCREMENT</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">ALTER TABLE test4
+MODIFY id INT AUTO_INCREMENT;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h4 id="删除auto_increment">5.3 删除AUTO_INCREMENT</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">ALTER TABLE test4
+MODIFY id INT;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h4 id="mysql-8.0新特性自增变量的持久性">5.4 MySQL
+8.0新特性：自增变量的持久性</h4>
+<p>MySQL5.7中，对于自增主键的分配规则，是由InnoDB数据字典内部一个计数器来决定的，在<strong>内存中维护</strong>，并不会持久化到磁盘中。当数据库重启时，该计数器会被初始化。</p>
+<p>MySQL
+8.0将自增主键的计数器持久化到<strong>重做日志</strong>中。每次计数器发生改变，都会将其写入重做日志中。如果数据库重启，InnoDB会根据重做日志中的信息来初始化计数器的内存值。</p>
+<h3 id="外键约束foreign">6 外键约束（foreign）</h3>
+<h4 id="create-table-时添加约束-3">6.1 CREATE TABLE 时添加约束</h4>
+<p>主表和从表：父表和子表</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#先创建主表
+CREATE TABLE dept1(
+dept_id INT PRIMARY KEY,
+dept_name VARCHAR(15)
+);
+#再创建从表
+CREATE TABLE emp1(
+emp_id INT PRIMARY KEY AUTO_INCREMENT,
+emp_name VARCHAR(15),
+department_id INT,
+    
+#表级约束(关联的外键约束要求主表上的字段必须是主键约束或唯一性约束)
+CONSTRAINT fk_emp1_dept_id FOREIGN KEY (department_id) REFERENCES dept1(dept_id)
+);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="外键约束的演示">6.2 外键约束的演示</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#需要先在主表中添加,才能在从表中创建
+INSERT INTO dept1
+VALUES(10,'IT');
+
+INSERT INTO emp1
+VALUES(1001,'Tom',10);
+
+#需要先删除从表中的数据，才能删除主表中的数据<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="alter-table-时添加约束-3">6.3 ALTER TABLE 时添加约束</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">ALTER TABLE emp1
+ADD CONSTRAINT fk_emp1_dept_id FOREIGN KEY (department_id) REFERENCES dept1(dept_id)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h4 id="约束等级">6.4 约束等级</h4>
+<ul>
+<li><p>Cascade方式：在表上update/delete记录时，同步update/delete掉子表的匹配记录</p></li>
+<li><p>Set
+null方式：在父表上update/delete记录时，将子表上匹配记录的列设为null，但是要注意子表的外键列不能为not
+null</p></li>
+<li><p>No
+action方式：如果子表中有匹配的记录，则不允许对父表对应候选键进行update/delete操作</p></li>
+<li><p>Restrict方式：同no action，都是立即检查外键约束</p></li>
+<li><p>Set default方式
+(在可视化工具SQLyog中可能显示空白)：父表有变更时，子表将外键列设置成一个默认的值，但Innodb不能识别</p>
+<p>如果没有指定等级，就相当于Restrict方式</p>
+<p>对于外键约束，最好是采用: ON UPDATE CASCADE ON DELETE RESTRICT
+的方式。</p></li>
+</ul>
+<h4 id="删除外键约束">6.5 删除外键约束</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#一个表中可以声明多个外键约束
+ALTER TABLE 从表名 DROP FOREIGN KEY 外键约束名;
+ALTER TABLE emp1
+DROP FOREIGN KEY fk_emp1_dept_id;
+
+#手动删除外键约束对应的普通索引
+SHOW INDEX FROM emp1;
+ALTER TABLE emp1
+DROP INDEX fk_emp1_dept_id;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="check约束">7 CHECK约束</h3>
+<p>检查某个字段的值是否符号xx要求，一般指的是值的范围</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">CREATE TABLE test5(
+id INT,
+last_name VARCHAR(15),
+salary DECIMAL(10,2) CHECK(salary &gt; 2000)
+);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="default约束">8 DEFAULT约束</h3>
+<p>给某个字段/某列指定默认值，一旦设置默认值，在插入数据时，如果此字段没有显式赋值，则赋值为默认值。</p>
+<h4 id="create-table-时添加约束-4">8.1 CREATE TABLE 时添加约束</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">CREATE TABLE test6(
+id INT,
+last_name VARCHAR(15),
+salary DECIMAL(10,2) DEFAULT 2000
+);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="alter-table-时添加约束-4">8.2 ALTER TABLE 时添加约束</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">ALTER TABLE test6
+MODIFY salary DECIMAL(10,2) DEFAULT 2500;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h4 id="alter-table-时删除约束">8.3 ALTER TABLE 时删除约束</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">ALTER TABLE test6
+MODIFY salary DECIMAL(10,2);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h2 id="第13章-视图">第13章 视图</h2>
+<h3 id="视图view概述">1 视图（View）概述</h3>
+<p>1.视图是一种<strong>虚拟表</strong>，本身是<strong>不具有数据</strong>的，占用很少的内存空间，它是SQL中的一个重要概念。</p>
+<p>2.视图建立在已有表的基础上，视图赖以建立的这些表称为<strong>基表</strong>。</p>
+<p>3.视图的本质：存储起来的SELECT语句。</p>
+<p>4.针对视图做DML操作，回影响到对应的基表中的数据。反之亦然。</p>
+<p>5.视图本身的删除，不会导致基表中数据的删除。</p>
+<p>6.应用场景：针对于大型项目，可以考虑使用视图。</p>
+<p>7.优点：简化查询；控制数据的访问。</p>
+<h3 id="创建视图">2 创建视图</h3>
+<p>在CREATE VIEW语句中嵌入子查询</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">CREATE [OR REPLACE]
+[ALGORITHM = {UNDEFINED | MERGE | TEMPTABLE}]
+VIEW 视图名称 [(字段列表)]
+AS 查询语句
+[WITH [CASCADED|LOCAL] CHECK OPTION]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#针对于单表
+CREATE VIEW vu_emp1
+AS
+SELECT employ_id,last_name lname,salary
+FROM emps;
+WHERE salary &gt; 8000;
+
+CREATE VIEW vu_emp2(emp_id,NAME,monthly_sal)
+AS
+SELECT employee_id,last_name,salary
+FROM emps
+WHERE salary &gt; 8000;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#针对于多表
+CREATE VIEW vu_emp_dept
+AS
+sELECT e.employee_id,e.department_id,d.department_name
+FROM emps e JOIN depts d
+ON e.`department_id`= d.`department_id`;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#基于视图创建视图
+CREATE VIEW vu_emp3
+AS
+SELECT employee_id,last_name
+FROM vu_emp1;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="查看视图">3 查看视图</h3>
+<p>语法1：查看数据库的表对象、视图对象</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SHOW TABLES;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>语法2：查看视图的结构</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">DESC / DESCRIBE 视图名称;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>语法3：查看视图的属性信息</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#查看视图信息(显示数据表的存储引擎、版本、数据行数和数据大小等)
+SHOW TABLE STATUS LIKE '视图名称'\G<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>语法4：查看视图的详细定义信息</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SHOW CREATE VIEW 视图名称;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="更新视图中的数据">4 更新视图中的数据</h3>
+<h4 id="一般情况下">4.1 一般情况下</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#更新视图的数据,会导致基表中数据的修改
+UPDATE vu_emp1
+SET salary = 20000
+WHERE employee_id = 101;
+
+#同理,更新表中的数据,也会导致视图中的数据的修改<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="不能更新的情况">4.2 不能更新的情况</h4>
+<ul>
+<li>在定义视图的时候指定了<code>"ALGORITHM = TEMPTABLE"</code>，视图将不支持INSERT和DELETE操作</li>
+<li>视图中不包含基表中所有被定义为非空又未指定默认值的列，视图将不支持INSERT操作</li>
+<li>在定义视图的SELECT语句中使用了<strong>JOIN联合查询</strong>，视图将不支持INSERT和DELETE操作</li>
+<li>在定义视图的SELECT语句后的字段列表中使用了<strong>数学表达式</strong>或<strong>子查询</strong>，视图将不支持INSERT，也不支持UPDATE使用了数学表达式、子查询的字段值</li>
+<li>在定义视图的SELECT语句后的字段列表中使用<strong>DISTINCT</strong>、聚合函数、<strong>GROUP
+BY</strong>、<strong>HAVING</strong>、<strong>UNION</strong>
+等，视图将不支持INSERT、UPDATE、DELETE;</li>
+<li>在定义视图的SELECT语句中包含了子查询，而子查询中引用了FROM后面的表，视图将不支持INSERT、UPDATE、DELETE</li>
+<li>视图定义基于一个<strong>不可更新视图</strong></li>
+<li>常量视图</li>
+</ul>
+<h3 id="修改视图">5 修改视图</h3>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#方式1
+CREATE OR REPLACE VIEW vu_emp1
+AS
+SELECT employee_id,last_name,salary
+FROM emps
+WHERE salary &gt; 8000;
+
+#方式2
+ALTER VIEW vu_emp1
+AS
+SELECT employee_id,last_name,salary
+FROM emps
+WHERE salary &gt; 8000;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="删除视图">6 删除视图</h3>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">DROP VIEW IF EXISTS vu_emp2,vu_emp3;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>说明：基于视图a、b创建了新的视图c，如果将视图a或者视图b删除，会导致视图c的查询失败。这样的视图c需要手动删除或修改，否则影响使用。</p>
+<h3 id="总结">7 总结</h3>
+<h4 id="视图优点">7.1 视图优点</h4>
+<p>1.操作简单</p>
+<p>2.减少数据冗余</p>
+<p>3.数据安全</p>
+<p>4.适应灵活多变的需求</p>
+<p>5.能够分解复杂的查询逻辑</p>
+<h4 id="视图缺点">7.2 视图缺点</h4>
+<p>如果我们在实际数据表的基础上创建了视图，那么，如果实际数据表的结构变更了，我们就需要及时对相关的视图进行相应的维护。特别是嵌套的视图
+(就是在视图的基础上创建视图)，维护会变得比较复杂，可读性不好，容易变成系统的潜在隐患。因为创建视图的
+SOL
+查询可能会对字段重命名，也可能包含复杂的逻辑，这些都会增加维护的成本。
+实际项目中，如果视图过多，会导致数据库维护成本的问题</p>
+<h2 id="第14章-存储过程与存储函数">第14章 存储过程与存储函数</h2>
+<h3 id="存储过程概述">1 存储过程概述</h3>
+<p>Stored Procedure：一组经过预先编译的SQL语句的封装。</p>
+<p>好处：</p>
+<ol type="1">
+<li>简化操作，提高了sql语句的重用性，减少了开发程序员的压力<br>(2)
+减少操作过程中的失误，提高效率<br>(3)
+减少网络传输量（客户端不需要把所有的 SQL 语句通过网络发给服务器）<br>(4)
+减少了 SQL 语句暴露在网上的风险也提高了数据查询的安全性</li>
+</ol>
+<h3 id="创建存储过程">2 创建存储过程</h3>
+<p>语法：</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">CREATE PROCEDURE 存储过程名(IN|OUT|INOUT 参数名 参数类型,...)
+[characteristics ...]
+BEGIN
+	存储过程体
+	
+END<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="存储函数的使用">3 存储函数的使用</h3>
+<p>语法：</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">CREATE FUNCTION 函数名(参数名 参数类型,...)
+RETURNS 返回值类型
+[characteristics ...]
+BEGIN
+	函数体	#函数体中肯定有 RETURN 语句
+
+END<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="第15章-变量流程控制与游标">第15章 变量、流程控制与游标</h2>
+<h3 id="变量">1 变量</h3>
+<h4 id="系统变量">1.1 系统变量</h4>
+<h5 id="系统变量分类">1.1.1 系统变量分类</h5>
+<p>全局系统变量（需要添加<strong>global</strong>关键字）</p>
+<p>会话系统变量（需要添加<strong>session</strong>关键字）</p>
+<p>在MySQL中有些系统变量只能是全局的，例如 max_connections
+用于限制服务器的最大连接数；有些系统变量作用域既可以是全局又可以是会话，例如
+character_set_client
+用于设置客户端的字符集；有些系统变量的作用域只能是当前会话，例如
+pseudo_thread_id 用于标记当前会话的 MySQL连接ID。</p>
+<h5 id="查看系统变量">1.1.2 查看系统变量</h5>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#查看所有全局变量
+SHOW GLOBAL VARIABLES; #617
+
+#查看所有会话变量
+SHOW SESSION VARIABLES; #640
+#或
+SHOW VARIABLES;
+
+#查看部分系统变量
+SHOW GLOBAL VARIABLES LIKE 'admin_%';
+
+#查看指定系统变量
+SELECT @@glogal.max_connections;
+SELECT @@session.character_set_client;
+SELECT @@pseudo_thread_id; #先查询会话系统变量,再查询全局系统变量<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="修改系统变量">1.1.3 修改系统变量</h5>
+<p>方式1：修改MySQL配置文件（需要重新MySQL服务）</p>
+<p>方式2：在MySQL服务运行期间，使用"set"命令重新设置系统变量的值</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#全局系统变量
+#方式1:
+SET @@global.max_connections = 161;
+#方式2:
+SET GLOBAL max_connections = 171;
+#针对于当前的数据库实例是有效的,一旦重启mysql服务,就失效了。
+
+#会话系统变量
+#方式1:
+SET @@session.character_set_client = 'gbk';
+#方式2:
+SET SESSION character_set_client = 'gbk';
+#针对于当前会话是有效的，一旦结束会话，重新建立起新的会话，就失效了。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="用户变量">1.2 用户变量</h4>
+<h5 id="用户变量分类">1.2.1 用户变量分类</h5>
+<p>会话用户变量：只对<strong>当前连接</strong>会话有效。使用"@"开头，作用域为当前会话。</p>
+<p>局部变量：只在 BEGIN 和 END
+语句块中有效。局部变量只能在<strong>存储过程和存储函数</strong>中使用。</p>
+<h5 id="会话用户变量">1.2.2 会话用户变量</h5>
+<p>变量的声明和赋值：</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#方式1:
+SET @用户变量 = 值;
+SET @用户变量 := 值;
+#方式2:
+SELECT @用户变量 := 表达式 [EROM 等子句];
+SELECT 表达式 INTO @用户变量 [FROM 等子句];<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>使用：</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT @变量名<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h5 id="局部变量">1.2.3 局部变量</h5>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">BEGIN
+	#声明局部变量
+	DECLARE 变量名1 变量数据类型 [DEFAULT 变量默认值];
+	DECLARE 变量名2,变量名3,...变量数据类型 [DEFAULT 变量默认值];
+	
+	#为局部变量赋值
+	SET 变量名1 = 值;
+	SELECT 值 INTO 变量名2 [FROM 子句];
+	
+	#查看局部变量的值
+	SELECT 变量1,变量2,变量3;
+END<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="定义条件与处理程序">2 定义条件与处理程序</h3>
+<p>定义条件是事先定义程序执行过程中可能遇到的问题，处理程序定义了在遇到问题时应当采取的处理方式，并且保证存储过程或函数在遇到警告或错误时能继续执行。这样可以增强存储程序处理问题的能力，避免程序异常停止运行</p>
+<h4 id="定义条件">2.1 定义条件</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">DECLARE 错误名称 CONDITION FOR 错误码(错误条件)
+
+#方式1:使用MySQL_error_code
+DECLARE Field_Not_Be_NULL CONDITION FOR 1048;
+
+#方式2:使用sqlstate_value
+DECLARE Field_Not_Be_NULL CONDITION FOR SQLSTATE'23000';<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="定义处理程序">2.2 定义处理程序</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">DECLARE 处理方式 HANDLER FOR 错误类型 处理语句<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>处理方式：处理方式有3个取值: CONTINUE、EXIT、UNDO</p>
+<ul>
+<li><p>CONTINUE：表示遇到错误不处理，继续执行。</p></li>
+<li><p>EXIT：表示遇到错误马上退出</p></li>
+<li><p>UNDO：表示遇到错误后撤回之前的操作。MySQL中暂时不支持这样的操作。</p></li>
+</ul>
+<p>错误类型（即条件）可以有如下取值：</p>
+<ul>
+<li>SQLSTATE
+'字符串错误码'：表示长度为5的sqlstate_value类型的错误代码</li>
+<li>MySQL_error_code : 匹配数值类型错误代码；</li>
+<li>错误名称：表示DECLARE...CONDITION定义的错误条件名称</li>
+<li>SQLWARNING：匹配所有以01开头的SQLSTATE错误代码</li>
+<li>NOT FOUND：匹配所有以02开头的SQLSTATE错误代码</li>
+<li>SQLEXCEPTION：匹配所有没有被SQLWARNING或NOT
+FOUND捕获的SQLSTATE错误代码</li>
+</ul>
+<p>处理程序：</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#方法1: 捕获sqlstate_value
+DECLARE CONTINUE HANDLER FOR SQLSTATE '42S02' SET @info ='NO_SUCH_TABLE';
+
+#方法2: 捕获mysql_error_value
+DECLARE CONTINUE HANDLER FOR 1146 SET @info = 'NO_SUCH_TABLE';
+
+#方法3: 先定义条件，再调用
+DECLARE no_such_table CONDITION FOR 1146;
+DECLARE CONTINUE HANDLER FOR NO_SUCH_TABLE SET @nfO = 'NO_SUCH_TABLE';
+
+#方法4: 使用SQLWARNING
+DECLARE EXIT HANDLER FOR SQLWARNING SET @info ='ERROR';
+
+#方法5:使用NOT FOUND
+DECLARE EXIT HANDLER FOR NOT FOUND SET @info ='NO_SUCH_TABLE';
+
+#方法6: 使用SQLEXCEPTION
+DECLARE EXIT HANDLER FOR SQLEXCEPTION SET @info ='ERROR';<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="流程控制">3 流程控制</h3>
+<h4 id="分支结构">3.1 分支结构</h4>
+<h5 id="if">3.1.1 IF</h5>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">IF 表达式1	THEN 操作1
+[ELSEIF 表达式2 THEN 操作2].....
+[ELSE 操作N]
+END IF<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="case">3.2.2 CASE</h5>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#情况一: 类似于switch
+CASE 表达式
+WHEN 值1 THEN 结果1或语句1(如果是语句,需要加分号)
+WHEN 值2 THEN 结果2或语句2(如果是语句,需要加分号)
+...
+ELSE 结果n或语句n(如果是语句,需要加分号)
+END [case](如果是放在begin end中需要加上case,如果放在select后面不需要)
+
+
+CASE语句的语法结构2:
+#情况二:类似于多重if
+CASE
+WHEN 条件1 THEN 结果1或语句1(如果是语句，需要加分号)
+WHEN 条件2 THEN 结果2或语句2(如果是语句，需要加分号)
+...
+ELSE 结果n或语句n(如果是语句,需要加分号)
+END [case](如果是放在begin end中需要加上case,如果放在select后面不需要)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="循环结构">3.2 循环结构</h4>
+<h5 id="loop">3.2.1 LOOP</h5>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">[loop_label:] LOOP
+	循环执行的语句
+END LOOP [loop_label]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h5 id="while">3.2.2 WHILE</h5>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">[while_label:] WHILE 循环条件 DO
+	循环体
+END WHILE [while_label];<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h5 id="repeat">3.2.3 REPEAT</h5>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">[repeat_label:] REPEAT
+	循环体的语句
+UNTIL 结束循环的条件表达式
+END REPEAT[repeat_label]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="跳转语句">3.3 跳转语句</h4>
+<h5 id="leave">3.3.1 LEAVE</h5>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">LEAVE 标记名<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h5 id="iterate">3.3.2 ITERATE</h5>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">ITERATE	label<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="游标">3.4 游标</h3>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#1.声明游标
+DECLARE cursor_name CURSOR FOR select_statement;
+#2.打开游标
+OPEN cursor_name
+#3.使用游标
+FETCH cursor_name INTO var_name [, var_name] ...
+#4.关闭游标
+CLOSE cursor_name<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="第16章-触发器">第16章 触发器</h2>
+<p>触发器是由 事件来触发 某个操作，这些事件包括 INSERT、UPDATE、DELETE
+事件。所谓事件就是指用户的动作或者触发某项行为。如果定义了触发程序，当数据库执行这些语句时候，就相当于事件发生了，就会自动激发触发器执行相应的操作。</p>
+<h3 id="触发器的创建">1 触发器的创建</h3>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">CREATE TRIGGER 触发器名称
+{BEFORE|AFTER} {INSERT|UPDATE|DELETE} ON 表名
+FOR EACH ROW
+触发器执行的语句块;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="查看删除触发器">2 查看、删除触发器</h3>
+<h4 id="查看触发器">2.1 查看触发器</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#方式1:
+SHOW TRIGGERS\G;
+
+#方式2:
+SHOW CREATE TRIGGER 触发器名
+
+#方式3:
+SELECT * FROM information_schema.TRIGGERS;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="删除触发器">2.2 删除触发器</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">DROP TRIGGER IF EXISTS 触发器名称;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="第17章-mysql高级篇">第17章 MySQL高级篇</h2>
+<h3 id="sql大小写规范">1 SQL大小写规范</h3>
+<p>MySQL在Linux下数据库名、表名、列名、别名大小写规则是这样的：</p>
+<p>1、数据库名、表名、表的别名、变量是严格区分大小写的；<br>2、关键字、函数名称在
+SQL 中不区分大小写的；<br>
+3、列名（或字段名）与列的别名（或字段别名）在所有的情况下均是忽略大小写的；</p>
+<p>MySQL在Windows的环境下全部不区分大小写</p>
+<h2 id="第17章-mysql的数据目录">第17章 MySQL的数据目录</h2>
+<h4 id="innodb存储引擎模式"><strong>InnoDB存储引擎模式</strong></h4>
+<p>举例：数据库a ，表b 。</p>
+<p>如果表b采用 InnoDB，data1个或者2个文件：</p>
+<ul>
+<li>b.frm : 描述表结构文件，字段长度等</li>
+<li>如果采用<strong>系统表空间</strong>模式的，数据信息和索引信息都存储在
+ibdata1 中</li>
+<li>如果采用<strong>独立表空间</strong>存储模式，datab.ibd
+文件（存储数据信息和索引信息）</li>
+</ul>
+<p>此外：</p>
+<p>① MySQL5.7 中会在data/a的目录下生成 db.opt
+文件用于保存数据库的相关配置。比如：字符集、比较规则。而MySQL8.0不再提供db.opt文件。</p>
+<p>② MySQL8.0中不再单独提供b.frm，而是合并在b.ibd文件中。</p>
+<h4 id="myisam存储引擎模式">MyISAM存储引擎模式</h4>
+<p>如果表b采用 MyISAM，data3个文件：</p>
+<ul>
+<li>MySQL5.7 中：b.frm : 描述表结构文件，字段长度等。</li>
+<li>MySQL8.0 中 b.xxx.sdi：描述表结构文件，字段长度等。</li>
+<li>b.MYD(MYData)：数据信息文件，存储数据信息(如果采用独立表存储模式)</li>
+<li>b.MYI(MYIndex)：存放索引信息文件</li>
+</ul>
+<h2 id="第18章-用户与权限管理">第18章 用户与权限管理</h2>
+<h3 id="用户管理">1 用户管理</h3>
+<h4 id="登录mysql服务器">1.1 登录MySQL服务器</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">mysql -h localhost -P 3306 -p dbtest1 -e "select * from emp1";<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="创建用户">1.2 创建用户</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">CREATE USER '用户名'@localhost IDENTIFIED BY '密码';<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="更新用户">1.3 更新用户</h4>
+<p>更新完需要 <code>flush privileges;</code></p>
+<h4 id="删除用户">1.4 删除用户</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#方式1:使用DROP(推荐)
+DROP USER '用户名'@'localhost';
+
+#方式2:使用DELETE
+DELETE FROM mysql.user WHERE Host='hostname' AND User='username';
+flush privileges;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="设置当前用户密码">1.5 设置当前用户密码</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#方式1:
+ALTER USER USER() IDENTIFIED BY 'new_password';
+
+#方式2:
+SET PASSWORD = 'new_password';<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="修改其他用户密码">1.6 修改其他用户密码</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#方式1:
+ALTER USER '用户名' IDENTIFIED BY 'new_password';
+
+#方式2:
+SET PASSWORD FOR 'username'@'localhost' = 'new_password';<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="权限管理">2 权限管理</h3>
+<h4 id="权限列表">2.1 权限列表</h4>
+<figure>
+<img src="C:\Users\wuhao\AppData\Roaming\Typora\typora-user-images\image-20230302195601042.png" alt="image-20230302195601042">
+<figcaption aria-hidden="true">image-20230302195601042</figcaption>
+</figure>
+<h4 id="授予权限">2.2 授予权限</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">GRANT 权限1,权限2,...权限N ON 数据库名称.表名称 TO 用户名@用户地址 [IDENTIFIED BY '密码口令'];<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>如果需要赋予包括GRANT的权限，添加参数<code>WITH GRANT OPTION</code>
+这个选项</p>
+<h4 id="查看权限">2.3 查看权限</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SHOW GRANTS;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="收回权限">2.4 收回权限</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">REVOKE 权限1,权限2,...权限n ON 数据库名称.表名称 FROM 用户名@用户地址;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>总结 有一些程序员喜欢使用 Root
+超级用户来访问数据库，完全把权限控制放在应用层面实现。这样当然也是可以的。但建议大家，尽量使用数据库自己的角色和用户机制来控制访问权限，不要轻易用
+Root 账号。因为Root
+账号密码放在代码里面不安全，一旦泄露，数据库就会完全失去保护。<br>而且，MySQL
+的权限控制功能十分完善，应该尽量利用，可以提高效率，而且安全可靠。</p>
+<h3 id="角色管理">3 角色管理</h3>
+<h4 id="创建角色">3.1 创建角色</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">CREATE ROLE 'role_name'[@'host_name'];<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="赋予角色权限">3.2 赋予角色权限</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">GRANT privileges ON table_name TO 'role_name'[@'host_name'];<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="查看角色权限">3.3 查看角色权限</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SHOW GRANTS FOR 'role_name'[@'host_name'];<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="回收角色的权限">3.4 回收角色的权限</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">REVOKE privileges ON table_name FROM 'role_name'[@'host_name'];<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="删除角色">3.5 删除角色</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">DROP ROLE 'role_name'[@'host_name'];<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="给用户赋予角色">3.6 给用户赋予角色</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">GRANT 'role_name'[@'host_name'] TO user;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="激活角色">3.7 激活角色</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#方式1:
+SET DEFAULT ROLE ALL TO user;
+
+#方式2:
+SET GLOBAL activate_all_roles_on_login = ON;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="撤销用户的角色">3.8 撤销用户的角色</h4>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">REVOKE role FROM user;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="设置强制角色">3.9 设置强制角色</h4>
+<h2 id="第19章-逻辑架构">第19章 逻辑架构</h2>
+<h3 id="逻辑架构">1 逻辑架构</h3>
+<figure>
+<img src="C:\Users\wuhao\AppData\Roaming\Typora\typora-user-images\image-20230302203317586.png" alt="image-20230302203317586">
+<figcaption aria-hidden="true">image-20230302203317586</figcaption>
+</figure>
+<figure>
+<img src="C:\Users\wuhao\AppData\Roaming\Typora\typora-user-images\image-20230302204435124.png" alt="image-20230302204435124">
+<figcaption aria-hidden="true">image-20230302204435124</figcaption>
+</figure>
+<h3 id="sql执行流程">2 SQL执行流程</h3>
+<figure>
+<img src="C:\Users\wuhao\AppData\Roaming\Typora\typora-user-images\image-20230302204529872.png" alt="image-20230302204529872">
+<figcaption aria-hidden="true">image-20230302204529872</figcaption>
+</figure>
+<h3 id="引擎介绍">3 引擎介绍</h3>
+<h4 id="innodb引擎具备外键支持功能的事务存储引擎">InnoDB引擎：具备外键支持功能的事务存储引擎</h4>
+<ul>
+<li>MySQL大于等于5.5之后，默认采用InnoDB引擎
+<ul>
+<li>InnoDB是MySQL的<strong>默认事务型引擎</strong>，它被设计用来处理大量的短期（short-lived）事务。可以确保事务的完整提交（Commit）和回滚（Rollback）</li>
+</ul></li>
+<li>除了增加和查询外，还需要更新、删除操作，那么，应优先选择InnoDB存储引擎</li>
+<li>除非有非常特别的原因需要使用其他的存储引擎，否则应该优先考虑InnoDB引擎</li>
+<li>InnoDB是为处理巨大数据量的最大性能设计</li>
+<li>对比MyISAM的存储引擎，InnoDB写的处理效率差一些，并且会占用更多的磁盘空间以保存数据和索引。</li>
+<li>MyISAM只缓存索引，不缓存真实数据；lnnoDB不仅缓存索引还要缓存真实数据，对内存要求较高，而且内存大小对性能有决定性的影响。</li>
+</ul>
+<h4 id="myisam引擎主要的非事务处理存储引擎">MyISAM引擎：主要的非事务处理存储引擎</h4>
+<ul>
+<li><p>MyISAM提供了大量的特性，包括全文索引、压缩、空间函数(GIS)等，但MylSAM
+不支持事务、行级锁、外键，有一个毫无疑问的缺陷就是崩溃后无法安全恢复。</p></li>
+<li><p>优势是访问的速度快，对事务完整性没有要求或者以SELECT、INSERT为主的应用</p></li>
+<li><p>针对数据统计有额外的常数存储。故而
+count(*)的查询效率很高</p></li>
+<li><p>应用场景：只读应用或者以读为主的业务</p></li>
+</ul>
+<figure>
+<img src="C:\Users\wuhao\AppData\Roaming\Typora\typora-user-images\image-20230302210615805.png" alt="image-20230302210615805">
+<figcaption aria-hidden="true">image-20230302210615805</figcaption>
+</figure>
+<h4 id="archive引擎用于数据存档">Archive引擎：用于数据存档</h4>
+<ul>
+<li>archive仅仅支持插入和查询两种功能 (行被插入后不能再修改)。</li>
+<li>在MySQL5.5以后支持索引功能。</li>
+<li>拥有很好的压缩机制，使用zlib压缩库，在记录请求的时候实时的进行压缩，经常被用来作为仓库使用。</li>
+<li>创建ARCHIVE表时，存储引擎会创建名称以表名开头的文件。数据文件的扩展名为.ARZ</li>
+<li>根据英文的测试结论来看，同样数据量下，Archive表比MyISAM表要小大约75%，比支持事务处理的InnoDB表小大约83%</li>
+<li>ARCHIVE存储引擎采用了行级锁。该ARCHIVE引擎支持 AUTO_INCREMENT
+列属性。AUTO_INCREMENT列可以具有唯一索引或非唯一索引。尝试在任何其他列上创建索引会导致错误。</li>
+<li>Archive表适合日志和数据采集（档案）类应用，适合存储大量的独立的作为历史记录的数据。拥有很高的插入速度，但是对查询的支持较差。</li>
+</ul>
+<h4 id="blackhole引擎丢弃写操作读操作会返回空内容">Blackhole引擎：丢弃写操作，读操作会返回空内容</h4>
+<h4 id="csv引擎存储数据时以逗号分隔各个数据项">CSV引擎：存储数据时，以逗号分隔各个数据项</h4>
+<ul>
+<li>CSV引擎可以将普通的CSV文件作为MySQL的表来处理 ，但不支持索引</li>
+<li>CSV引擎可以作为一种数据交换的机制，非常有用</li>
+<li>CSV存储的数据直接可以在操作系统里，用文本编辑器或者excel读取</li>
+<li>对于数据的快速导入、导出是有明显优势的</li>
+</ul>
+<h4 id="memory引擎置于内存的表">Memory引擎：置于内存的表</h4>
+<p>Memory采用的逻辑介质是内存，响应速度很快，但是当mysqld守护进程崩溃的时候数据会丢失。另外，要求存储的数据是数据长度不变的格式，比如，Blob和Text类型的数据不可用（长度不固定的）。</p>
+<ul>
+<li><p>Memory同时支持哈希 (HASH) 索引和B+树索引</p></li>
+<li><p>哈希索引相等的比较快，但是对于范围的比较慢很多</p></li>
+<li><p>默认使用哈希 (HASH) 索引 ，其速度要比使用B型树 (BTREE)
+索引快</p></li>
+<li><p>如果希望使用B树索引，可以在创建索引时选择使用。</p></li>
+<li><p>Memory表至少比MyISAM表要快一个数量级</p></li>
+<li><p>MEMORY表的大小是受到限制的。表的大小主要取决于两个参数，分别是max_rows
+和max_heap_table_size。其中，max_rows可以在创建表时指定；max_heap_table_size的大小默认为16MB，可以按需要进行扩大</p></li>
+<li><p>数据文件与索引文件分开存储</p>
+<ul>
+<li>每个基于MEMORY存储引擎的表实际对应一个磁盘文件，该文件的文件名与表名相同，类型为frm类型，该文件中只存储表的结构，而其数据文件都是存储在内存中的。</li>
+<li>这样有利于数据的快速处理，提供整个表的处理效率</li>
+</ul></li>
+<li><p>缺点:
+其数据易丢失，生命周期短。基于这个缺陷，选择MEMORY存储引擎时需要特别小心</p>
+<p>使用Memory存储引擎的场景：</p>
+<ul>
+<li>目标数据比较小，而且非常频繁的进行访问，在内存中存放数据，如果太大的数据会造成内存溢出。可以通过参数max_heap_table_size控制Memory表的大小，限制Memory表的最大的大小</li>
+<li>如果数据是临时的，而且必须立即可用得到，那么就可以放在内存中</li>
+<li>存储在Memory表中的数据如果突然间丢失的话也没有太大的关系</li>
+</ul></li>
+</ul>
+<h4 id="federated引擎访问远程表">Federated引擎：访问远程表</h4>
+<h4 id="merge引擎管理多个myisam表构成的表集合">Merge引擎：管理多个MyISAM表构成的表集合</h4>
+<h4 id="ndb引擎mysql集群专用存储引擎">NDB引擎：MySQL集群专用存储引擎</h4>
+<h2 id="第20章-索引的数据结构">第20章 索引的数据结构</h2>
+<h3 id="索引概述">1 索引概述</h3>
+<p>MySQL官方对索引的定义为：索引（Index）是帮助MySQL高效获取数据的数据结构。</p>
+<p>索引的本质：索引是数据结构。这些数据结构以某种方式指向数据，这样就可以在这些数据结构的基础上实现高级查找算法。</p>
+<p>索引是在存储引擎中实现的，因此每种存储引擎的索引不一定完全相同，并且每种存储引擎不一定支持所有索引类型。同时，存储引擎可以定义每个表的最大索引数和最大索引长度。所有存储引擎支持每个表至少16个索引，总索引长度至少为256字节。有些存储引擎支持更多的索引数和更大的索引长度。</p>
+<figure>
+<img src="C:\Users\wuhao\AppData\Roaming\Typora\typora-user-images\image-20230302223802544.png" alt="image-20230302223802544">
+<figcaption aria-hidden="true">image-20230302223802544</figcaption>
+</figure>
+<p>索引按照物理实现方式，索引可以分为 2
+种：聚簇（聚集）和非聚（非聚集）索引。我们也把非聚集索引称为二级索引或者辅助索引。</p>
+<p>MyISAM与InnoDB对比：</p>
+<p>MyISAM的索引方式都是""非聚簇"的，与lnnoDB包含1个聚族索引是不同的。</p>
+<ul>
+<li>在lnnoDB存储引擎中，我们只需要根据主键值对聚簇索引进行一次查找就能找到对应的记录，而在
+MyISAM中却需要进行一次回表操作，意味着MyISAM中建立的索引相当于全部都是二级索引。</li>
+<li>lnnoDB的数据文件本身就是索引文件，而MyISAM索引文件和数据文件是分离的，索引文件仅保存数据记录的地址。</li>
+<li>lnnoDB的非聚簇索引data域存储相应记录主键的值，而MyISAM索引记录的是地址。换句话说，InnoDB的所有非聚簇索引都引用主键作为data域。</li>
+<li>MyISAM的回表操作是十分快速的，团为是拿着地址偏移量直接到文件中取数据的，反观InnoDB是通过获取主键之后再去聚簇索引里找记录，虽然说也不慢，但还是比不上直接用地址去访问。</li>
+<li>lnnoDB要求表必须有主键（MyISAM可以没有）。如果没有显式指定，则MySQL系统会自动选择一个可以非空且唯一标识数据记录的列作为主键。如果不存在这种列，则MySOL自动为InnoDB表生成一个隐含字段作为主键，这个字段长度为6个字节，类型为长整型。</li>
+</ul>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Ricardo Hao</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://example.com/2023/03/17/mysql-bi-ji-fen-xiang/">http://example.com/2023/03/17/mysql-bi-ji-fen-xiang/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Ricardo Hao</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2023/03/17/redis/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Redis面试题">
+                        
+                        <span class="card-title">Redis面试题</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-03-17
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Ricardo Hao
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/03/17/modeling-path-information-for-knowledge-graph-completion/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Modeling path information for knowledge graph completion">
+                        
+                        <span class="card-title">Modeling path information for knowledge graph completion</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-03-17
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Ricardo Hao
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2022-2023</span>
+            
+            <a href="/about" target="_blank">Ricardo Hao</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">92.4k</span>
+            
+            
+            
+                
+            
+            
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/610653652" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:wuhao990115@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=610653652" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 610653652" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+    
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
